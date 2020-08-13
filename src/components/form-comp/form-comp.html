@@ -1,0 +1,78 @@
+<form #formCont="ngForm" (ngSubmit)="onSubmit()">
+  <ion-grid *ngIf="FormItems.length === 0">
+    <ion-row *ngFor="let component of components">
+      <ion-col *ngFor="let sections of component.component">
+        <ion-list *ngFor="let section of sections.sections">
+          <ion-list-header>
+            {{section.header}}
+          </ion-list-header>
+          <ng-container *ngFor="let FormItem of section.formItems" [ngSwitch]="FormItem.type">
+            <ion-item *ngSwitchCase="'text'">
+              <ion-label text-wrap>{{ FormItem.name }}</ion-label>
+              <ion-input type="text" [id]="FormItem.key" [name]="FormItem.key" [(ngModel)]="FormItem.value"></ion-input>
+            </ion-item>
+            <ion-item *ngSwitchCase="'date'">
+              <ion-label text-wrap>{{ FormItem.name }}</ion-label>
+              <ion-datetime [id]="FormItem.key" [name]="FormItem.key" [displayFormat]="FormItem.date_format" pickerFormat="YYYY MM DD HH mm ss"
+                max="2020" [(ngModel)]="FormItem.value" [cancelText]="translateService.translateFunc('pad.action_cancel')"
+                [doneText]="translateService.translateFunc('pad.action_ok')"></ion-datetime>
+            </ion-item>
+
+            <button *ngSwitchCase="'relation'" ion-item (click)="tapAction($event, FormItem)">
+              {{ FormItem.name }}
+              <p item-end>{{ FormItem.value }}</p>
+            </button>
+            <ion-item *ngSwitchCase="'password'">
+              <input type="password" [id]="FormItem.key" [name]="FormItem.key" [(ngModel)]="FormItem.value">
+            </ion-item>
+            <ion-item *ngSwitchCase="'select_one'">
+              <ion-label text-wrap>{{ FormItem.name }}</ion-label>
+              <ion-select [id]="FormItem.key" [name]="FormItem.key" [(ngModel)]="FormItem.value" [cancelText]="translateService.translateFunc('pad.action_cancel')"
+                [okText]="translateService.translateFunc('pad.action_ok')">
+                <ion-option *ngFor="let opt of FormItem.options" [value]="opt.value">{{ opt.label }}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngSwitchDefault>
+              <ion-label text-wrap>{{ FormItem.name }}</ion-label>
+              <ion-input type="text" [id]="FormItem.key" [name]="FormItem.key" [(ngModel)]="FormItem.value"></ion-input>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngIf="FormItems.length > 0">
+    <ion-list-header>
+    </ion-list-header>
+    <ng-container *ngFor="let FormItem of FormItems" [ngSwitch]="FormItem.type">
+      <ion-item *ngSwitchCase="'text'">
+        <ion-label text-wrap>{{ FormItem.name }}</ion-label>
+        <ion-input type="text" [id]="FormItem.key" [name]="FormItem.key" [(ngModel)]="FormItem.value"></ion-input>
+      </ion-item>
+      <ion-item *ngSwitchCase="'date'">
+        <ion-label text-wrap>{{ FormItem.name }}</ion-label>
+        <ion-datetime [id]="FormItem.key" [name]="FormItem.key" [displayFormat]="FormItem.date_format" pickerFormat="YYYY MM DD HH mm ss"
+          max="2020" [(ngModel)]="FormItem.value" [cancelText]="translateService.translateFunc('pad.action_cancel')" [doneText]="translateService.translateFunc('pad.action_ok')"></ion-datetime>
+      </ion-item>
+
+      <button *ngSwitchCase="'relation'" ion-item (click)="tapAction($event, FormItem)">
+        {{ FormItem.name }}
+        <p item-end>{{ FormItem.value }}</p>
+      </button>
+      <ion-item *ngSwitchCase="'password'">
+        <input type="password" [id]="FormItem.key" [name]="FormItem.key" [(ngModel)]="FormItem.value">
+      </ion-item>
+      <ion-item *ngSwitchCase="'select_one'">
+        <ion-label text-wrap>{{ FormItem.name }}</ion-label>
+        <ion-select [id]="FormItem.key" [name]="FormItem.key" [(ngModel)]="FormItem.value" [cancelText]="translateService.translateFunc('pad.action_cancel')"
+          [okText]="translateService.translateFunc('pad.action_ok')">
+          <ion-option *ngFor="let opt of FormItem.options" [value]="opt.value">{{ opt.label }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngSwitchDefault>
+        <ion-label text-wrap>{{ FormItem.name }}</ion-label>
+        <ion-input type="text" [id]="FormItem.key" [name]="FormItem.key" [(ngModel)]="FormItem.value"></ion-input>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</form>

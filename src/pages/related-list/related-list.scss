@@ -1,0 +1,29 @@
+related-list{
+  ion-input.searchBox{
+    ::-webkit-input-placeholder { /* WebKit browsers */
+      color: lightgray;
+      font-size: 80%;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: lightgray;
+      font-size: 80%;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: lightgray;
+      font-size: 80%;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: lightgray;
+      font-size: 80%;
+    }
+    input{
+      border-bottom: 1px solid lightcyan;
+    }
+  }
+  .bar-button-menutoggle-ios ion-icon{
+    font-size: 2rem;
+  }
+  .fc-end-actions{
+    display: flex;
+  }
+}

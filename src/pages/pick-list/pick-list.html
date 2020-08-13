@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span *ngIf="!showFilter">{{header}}</span>
+      <span *ngIf="showFilter" style="display:flex;align-items:center;">
+        <ion-input type="text" class="searchBox" [placeholder]="placeHolder" [(ngModel)]="searchBoxValue"></ion-input>
+        <span (click)="searchList()">
+          <ion-icon class="fa fa-search" color="lightcyan" item-start></ion-icon>
+        </span>
+      </span>
+    </ion-title>
+    <ion-buttons end *ngIf="isMultiple">
+      <button style="padding-left:1rem" ion-button icon-only color="royal" (click)="multiplePickValue()">
+        {{translateService.translateFunc('pad.pick_done')}}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" [pullingText]="translateService.translateFunc('pad.home_action_pull_refresh')"
+      refreshingSpinner="circles" [refreshingText]="translateService.translateFunc('pad.home_action_refreshing')">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="newListData">
+    <ion-list-header>
+      {{header}}
+      <span *ngIf="total">{{translateService.translateFunc('pad.home_total_front')}}{{total}}{{translateService.translateFunc('pad.home_total_unit')}}</span>
+    </ion-list-header>
+    <ng-container *ngIf="newListData.length > 0">
+      <ion-item-sliding *ngFor="let newListItems of newListData; let i = index" #slidingItem>
+        <!-- 单选 s -->
+        <ion-item *ngIf="!newListItems.isPadLayout && !isMultiple" (click)="newPickValue(i, pickList)">
+          <p *ngFor="let item of newListItems.layout">
+            {{item.label}}{{item.label ? ':' : ''}}{{item.value}}
+          </p>
+        </ion-item>
+        <ion-item *ngIf="newListItems.isPadLayout && !isMultiple" (click)="newPickValue(i, pickList)">
+          <ion-avatar item-start *ngIf="newListItems.padlayout.avatar.exist">
+            <img [src]="newListItems.padlayout.avatar.data">
+          </ion-avatar>
+          <h2 *ngIf="newListItems.padlayout.title.exist">{{ newListItems.padlayout.title.data }}</h2>
+          <h3 *ngIf="newListItems.padlayout.subTitle.exist">{{ newListItems.padlayout.subTitle.data }}</h3>
+          <ng-container *ngFor="let cont of newListItems.padlayout.contents" [ngSwitch]="cont.type">
+            <p *ngSwitchCase="'text'">{{ cont.data }}</p>
+            <p *ngSwitchCase="'expression'">{{ cont.data }}</p>
+          </ng-container>
+          <ion-note item-end>
+            <ng-container *ngFor="let label of newListItems.padlayout.labels" [ngSwitch]="label.type">
+              <ion-badge *ngSwitchCase="'label'" [color]="label.color ? undefined : 'secondary'" [style.background-color]="label.color">{{ label.data }}</ion-badge>
+              <ion-icon *ngSwitchCase="'icon'" name="star" color="danger"></ion-icon>
+            </ng-container>
+          </ion-note>
+        </ion-item>
+        <!-- 单选 e -->
+
+        <!-- 多选 s -->
+        <ion-item *ngIf="!newListItems.isPadLayout && isMultiple">
+          <ion-label>
+            <p *ngFor="let item of newListItems.layout">
+              {{item.label}}{{item.label ? ':' : ''}}{{item.value}}
+            </p>
+          </ion-label>
+          <ion-checkbox color="dark" [checked]="newListItems.value" [(ngModel)]="newListItems.value" (ionChange)="updateCucumber($event,newListItems)"></ion-checkbox>
+        </ion-item>
+        <!-- 多选 有值 s -->
+        <ion-item *ngIf="newListItems.isPadLayout && isMultiple">
+          <ion-label>
+            <ion-avatar item-start *ngIf="newListItems.padlayout.avatar.exist">
+              <img [src]="newListItems.padlayout.avatar.data">
+            </ion-avatar>
+            <h2 *ngIf="newListItems.padlayout.title.exist">{{ newListItems.padlayout.title.data }}</h2>
+            <h3 *ngIf="newListItems.padlayout.subTitle.exist">{{ newListItems.padlayout.subTitle.data }}</h3>
+            <ng-container *ngFor="let cont of newListItems.padlayout.contents" [ngSwitch]="cont.type">
+              <p *ngSwitchCase="'text'">{{ cont.data }}</p>
+              <p *ngSwitchCase="'expression'">{{ cont.data }}</p>
+            </ng-container>
+          </ion-label>
+          <ion-checkbox color="dark" [checked]="newListItems.value" [(ngModel)]="newListItems.value" (ionChange)="updateCucumber($event, newListItems)"></ion-checkbox>
+          <ion-note item-end>
+            <ng-container *ngFor="let label of newListItems.padlayout.labels" [ngSwitch]="label.type">
+              <ion-badge *ngSwitchCase="'label'" [color]="label.color ? undefined : 'secondary'" [style.background-color]="label.color">{{ label.data }}</ion-badge>
+              <ion-icon *ngSwitchCase="'icon'" name="star" color="danger"></ion-icon>
+            </ng-container>
+          </ion-note>
+        </ion-item>
+        <!-- 多选 有值 e -->
+        <!-- 多选 e -->
+  
+        <ion-item-options side="right" *ngIf="newListItems.rightOptions">
+          <button ion-button color="primary" *ngFor="let option of newListItems.rightOptions" (click)="openWindowWithActions(option, newListItems); closeSlide(slidingItem)">
+            {{option.label}}
+          </button>
+        </ion-item-options>
+        <ion-item-options side="left" *ngIf="newListItems.leftOptions">
+          <button ion-button color="primary" *ngFor="let option of newListItems.leftOptions" (click)="openWindowWithActions(option, newListItems); closeSlide(slidingItem)">
+            {{option.label}}
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+    <ng-container *ngIf="newListData.length === 0">
+      <ion-grid>
+        <ion-row>
+          {{translateService.translateFunc('pad.partici_nothing')}}{{header}}{{translateService.translateFunc('pad.partici_data')}}
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="pageNo < pageCount">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="translateService.translateFunc('pad.home_action_push_refresh')">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

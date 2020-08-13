@@ -1,0 +1,17 @@
+comp-product-edit {
+  .product-edit {
+    .product-col {
+      flex-wrap: wrap;
+      display: flex;
+      .product-item {
+        display: inline-block;
+        .item-block .item-inner {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+  .alert-checkbox-label{
+    white-space: pre-wrap;
+  }
+}

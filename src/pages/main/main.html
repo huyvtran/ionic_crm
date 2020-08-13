@@ -1,0 +1,277 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <ion-title>
+      <!-- {{
+        titleName
+          ? titleName
+          : translateService.translateFunc("pad.main_page_title")
+      }} -->
+      {{getTitleName()}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="fc-crm-main">
+  <ion-grid *ngIf="!isConfigHome">
+    <ion-row>
+      <ion-col col-12>
+        <ion-card>
+          <ion-card-header class="fc-sub-header">
+            {{ translateService.translateFunc("pad.main_calender_activity") }}
+            <span class="fc-sub-title" (click)="gotoCalendar()">
+              {{ translateService.translateFunc("pad.main_more") }}
+            </span>
+          </ion-card-header>
+          <ion-list
+            *ngIf="this.displayList.length === 0"
+            class="fc-sub-content"
+          >
+            <div class="no_data">
+              {{
+                translateService.translateFunc(
+                  "pad.main_calender_noting_remind"
+                )
+              }}
+            </div>
+          </ion-list>
+          <ion-card-content
+            *ngIf="this.displayList.length > 0"
+            class="fc-sub-content"
+          >
+            <ion-item *ngFor="let disp of this.displayList">
+              <p item-start (click)="gotoDetail(disp)">
+                <ion-badge [style.background-color]="disp.color">{{
+                  disp.label
+                }}</ion-badge>
+                {{ disp.start }} {{ disp.content }}
+              </p>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-12>
+        <ion-card>
+          <ion-card-header class="fc-sub-header">
+            {{ translateService.translateFunc("pad.main_notice") }}
+            <span class="fc-sub-title" (click)="gotoNoticePage()">
+              {{ translateService.translateFunc("pad.main_more") }}
+            </span>
+          </ion-card-header>
+          <ion-list *ngIf="!this.notice.name" class="fc-sub-content">
+            <div class="no_data">
+              {{ translateService.translateFunc("pad.main_no_notice") }}
+            </div>
+          </ion-list>
+          <ion-card-content *ngIf="this.notice.name" class="fc-sub-content">
+            <h2 *ngIf="this.notice.name" style="text-align:center;">
+              {{ this.notice.name }}
+            </h2>
+            <pre
+              style="text-align: left; word-wrap: break-word; white-space: pre-wrap; overflow: auto;"
+            >
+              {{ this.notice.description }}</pre
+            >
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <!-- 豪森没有kpi功能 -->
+    <!-- <ion-row>
+      <ion-col col-12>
+        <ion-card>
+          <ion-card-header class="fc-sub-header">
+            {{ translateService.translateFunc("pad.main_my_kpi") }}
+          </ion-card-header>
+          <ion-grid class="kpi-blk">
+            <ion-row>
+              <ion-col col-6 *ngFor="let x of kpiResult">
+                <div class="item-inner-title" text-right>
+                  {{ translateService.translateFunc(x.title) }}
+                </div>
+                <ion-item class="item">
+                  <ion-avatar item-start *ngIf="x.icon.substr(0, 2) === 'le'">
+                    <span class="fc-item-icon">
+                      <ion-icon style="color:#1496f0">{{
+                        x.icon.substr(x.icon.indexOf("-" + 1))
+                      }}</ion-icon>
+                    </span>
+                  </ion-avatar>
+                  <ion-avatar item-start *ngIf="x.icon.indexOf('fa-') > -1">
+                    <span class="fc-item-icon">
+                      <ion-icon
+                        class="ffa {{x.icon}}"
+                        style="color:#1496f0"
+                      ></ion-icon>
+                    </span>
+                  </ion-avatar>
+                  <div class="item-inner-text">
+                    <span class="fc-item-num">{{ x.numerator }}</span> /
+                    {{ x.denominator }}
+                  </div>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="kpiResult.length == 0" class="noReport">
+                {{ translateService.translateFunc("pad.main_no_kpi") }}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row> -->
+  </ion-grid>
+  <!-- 新首页 S -->
+  <ion-grid
+    class="fc-crm-new-home"
+    *ngIf="isConfigHome && activeExtenders.length > 0"
+  >
+    <div *ngFor="let extender of activeExtenders">
+      <div [ngSwitch]="extender.extender_type">
+        <div *ngSwitchCase="'component'" class="fc-main-component">
+          <ion-list
+            *ngIf="extender.content.display_items.length === 0"
+            class="fc-sub-content"
+          >
+            <div class="no_data">
+              {{
+                translateService.translateFunc(
+                  "pad.main_calender_noting_remind"
+                )
+              }}
+            </div>
+          </ion-list>
+          <div
+            *ngIf="extender.content.display_items.length > 0"
+            class="fc-sub-content"
+          >
+            <div *ngIf="extender.content.api_name === 'carousel'">
+              <ion-slides pager>
+                <ion-slide
+                  *ngFor="
+                    let item of getItems(
+                      extender.content.display_items,
+                      'carousel'
+                    )
+                  "
+                >
+                  <img src="{{item.url}}" class="slide-image" />
+                </ion-slide>
+              </ion-slides>
+            </div>
+            <div
+              *ngIf="extender.content.api_name === 'belt'"
+              class="fc-main-belt"
+            >
+              <ion-item
+                *ngFor="
+                  let item of getItems(extender.content.display_items, 'belt')
+                "
+                (click)="beltItemClick(item)"
+              >
+                <ion-avatar> <img src="{{item.iconUrl}}" /> </ion-avatar>
+                <span class="fc-belt-font">{{ item.display_name }}</span>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'objects'">
+          <div *ngFor="let displayItem of displayObjectSections">
+            <ion-card-header class="fc-sub-header">
+              {{ displayItem.name }}
+              <span class="fc-sub-title" (click)="gotoNewMore(displayItem)">
+                {{ translateService.translateFunc("pad.main_more") }}
+              </span>
+            </ion-card-header>
+            <ion-list *ngIf="newDisplayList.length < 1" class="fc-sub-content">
+              <div class="no_data">
+                {{
+                  translateService.translateFunc(
+                    "pad.main_calender_noting_remind"
+                  )
+                }}
+              </div>
+            </ion-list>
+            <ion-list
+              *ngIf="newDisplayList.length > 0 && displayItem.limit_number > 0"
+              class="fc-sub-content"
+            >
+              <ion-item
+                *ngFor="
+                  let disp of (getFilter(newDisplayList, displayItem)
+                    | slice: 0:displayItem.limit_number)
+                "
+                (click)="gotoDetail(disp)"
+              >
+                <p item-start >
+                  <ion-badge
+                    [style.background-color]="disp.renderTag.background_color"
+                    [style.color]="disp.renderTag.color"
+                    >{{ disp.renderTag.value}}</ion-badge
+                  >
+                  {{ getContent(disp.renderContents) }}
+                </p>
+                <p item-end>
+                  {{ getContent(disp.endContents)}}
+                  <ion-icon
+                    style="padding-left: 10px"
+                    class="ffa fa-angle-right"
+                  ></ion-icon>
+                </p>
+              </ion-item>
+            </ion-list>
+            <ion-list
+              *ngIf="newDisplayList.length > 0 && !displayItem.limit_number"
+              class="fc-sub-content"
+            >
+              <ion-item *ngFor="let disp of newDisplayList" (click)="gotoDetail(disp)">
+                <p item-start >
+                  <ion-badge
+                    [style.background-color]="disp.renderTag.background_color"
+                    [style.color]="disp.renderTag.color"
+                    >{{ disp.renderTag.value}}</ion-badge
+                  >
+                  {{ getContent(disp.renderContents) }}
+                </p>
+                <p item-end>
+                  {{ getContent(disp.endContents)}}
+                  <ion-icon
+                    style="padding-left: 10px"
+                    class="ffa fa-angle-right"
+                  ></ion-icon>
+                </p>
+              </ion-item>
+            </ion-list>
+          </div>
+        </div>
+        <div *ngSwitchCase="'reports'">
+          <div>
+            <ion-card-header class="fc-sub-header">
+              报表
+            </ion-card-header>
+            <div>
+              <ion-item *ngFor="let res of main_reports" class="main_rporets">
+                <span>{{res.name}}</span>
+                <span>{{res.value}}条</span>
+              </ion-item>
+              </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'web'">
+          <ion-card-header class="fc-sub-header">
+            {{ extender.content.name }}
+          </ion-card-header>
+          <div class="no_data" *ngIf="!extender.url">
+            {{
+              translateService.translateFunc("pad.main_calender_noting_remind")
+            }}
+          </div>
+          <iframe
+            id="segIframe"
+            *ngIf="extender.url"
+            [src]="extender.url"
+            style="width: 100%;min-height: 400px;overflow: auto; border: none;"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </ion-grid>
+</ion-content>

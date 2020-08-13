@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      {{translateService.translateFunc('pad.calender_page_title')}}
+    </ion-title>
+    <ion-buttons end>
+      <!-- 按照分类筛选，应该做成跳页多选的组件 -->
+      <button ion-button *ngIf="catagorys.length > 0" icon-only (click)="selectCatagory()">
+        <ion-icon class="ffa fa-filter"></ion-icon>
+      </button>
+      <button ion-button *ngIf="isSelectTree && selectTree.length > 0" icon-only (click)="selectSubordinate()">
+        <ion-icon class="ffa fa-sitemap"></ion-icon>
+      </button>
+      <button *ngIf="this.actions.length > 0" ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon class="ffa fa-plus"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content *ngIf="calendarLayout.calendar_items.length > 0">
+  <div class="fc-calender-content" id="fc-calendar">
+    <div [id]="calendarDiv"></div>
+  </div>
+  <div id="eventList">
+    <div class="select-day">{{selectDay}}</div>
+    <div *ngFor="let event of dayEventLists"  (click)="clickTheCard(event)" class="eventCard">
+      <span [style.background-color]="event.color" class="eventDoid">
+        <canvas  height="10" width="10"></canvas>
+      </span>
+      <div class="eventContent">
+        <div class="contentFront">
+          <div class="title">
+            {{event.title}}
+          </div>
+          <div>{{getTime(event.start)}}-{{getTime(event.end)}}</div>
+        </div>
+        <div class="card-content">
+          <p style="padding: 0.5rem 1rem;" [style.background-color]="event.color" [style.color]="event.textColor">{{compareToLegends(event)}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,4 @@
+
+ <span *ngFor="let star of stars; let i = index;" class="allstar" [class.empty_star]="!star"  (click)="onClickstar(i)">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+ <span *ngIf="show_label && rating " class="star_rating">{{ rating }}分</span>
+ <span *ngIf="show_label && rating==0 " class="star_rating">请选择</span> 

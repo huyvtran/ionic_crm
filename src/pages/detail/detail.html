@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{ this.translateService.translateFunc("pad.action_callback") }}
+      </button>
+    </ion-buttons>
+    <ion-title>{{ header}} </ion-title>
+    <ion-buttons end>
+      <button ion-button menuToggle>
+        <ion-icon class="ffa fa-th-large small"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col class="fc-sub-content">
+        <div #insertDiv></div>
+        <div #relatedListFields></div>
+        <comp-product-detail
+          *ngIf="recordType === 'report'"
+        ></comp-product-detail>
+        <comp-survey-feedback-detail
+          *ngIf="recordType === 'report' && isCreateClm"
+        ></comp-survey-feedback-detail>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

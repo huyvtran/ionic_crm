@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <ion-title>
+      {{translateService.translateFunc('pad.clm_media_detail_title')}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <ion-card class="thumbnail-card" (click)="play()">
+          <div class="thumbnail-cover">
+            <i class="fa fa-play fa-4x"></i>
+          </div>
+          <img [src]="clmCover | safe">
+        </ion-card>
+      </ion-col>
+      <ion-col col-12>
+        <h1 ion-text>{{ clmName }}</h1>
+        <p>{{ clmProduct }}</p>
+          <button ion-button icon-start full round (click)="play()">
+          <ion-icon name="play"></ion-icon>{{translateService.translateFunc('pad.clm_media_action_play')}}</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-list-header>{{translateService.translateFunc('pad.clm_media_introduction')}}</ion-list-header>
+          <p padding-horizontal>{{ clmDes }}</p>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

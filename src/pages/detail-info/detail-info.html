@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>{{translateService.translateFunc('pad.date_info_title')}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="fc-calendar-detailinfo">
+  <div #insertDiv>
+
+  </div>
+  <a class="fc-detailinfo-a" (click)="gotoDetailPage()">{{translateService.translateFunc('pad.date_load_more')}}</a>
+</ion-content>

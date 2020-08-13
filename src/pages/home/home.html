@@ -1,0 +1,213 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      {{selectView.name ? selectView.name: header }}
+      <button *ngIf="is_ViewsShow" icon-button icon-only style="background-color:transparent;"
+        (click)="presentViews($event)">
+        <ion-icon class="ffa fa-angle-down" color="light"></ion-icon>
+      </button>
+    </ion-title>
+    <ion-buttons end>
+      <!-- <button *ngIf="componentType === 'record_list' && show_filter" ion-button icon-only (click)="presentPopover($event, 'select')">
+        <ion-icon class="ffa fa-filter"></ion-icon>
+      </button> -->
+      <button *ngIf="actions !== undefined && actions.length > 0" ion-button icon-only
+        (click)="presentPopover($event, 'action')">
+        <ion-icon class="ffa fa-plus"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+    <!-- 新筛选开始 -->
+  <div [ngClass]="{'new-selector': is_show_modal, 'hiddenModal': !is_show_modal}">
+    <div class="left-layout">
+      <div [ngClass]="{'active' : i === filterIndex, 'left-select-item': !(i === filterIndex) }"
+        *ngFor="let filter of filterConditions; let i = index;" (click)="changeIndex(filter, i)">
+        {{filter.filter_name}}
+      </div>
+      <div class="reset-btn">
+        <button color="primary" ion-button full (click)="cleardata()">重置条件</button>
+      </div>
+    </div>
+    <div class="right-layout" *ngIf="filterConditions && filterConditions[filterIndex]">
+      <div class="right-content" [ngSwitch]="filterConditions[filterIndex].filter_type">
+        <ion-item *ngSwitchCase="'text'">
+          <ion-input type="text" value="" [placeholder]="filterConditions[filterIndex].filter_name"
+            [(ngModel)]="filterConditions[filterIndex].filter_value"></ion-input>
+        </ion-item>
+        <ion-item *ngSwitchCase="'relation'">
+          <ion-input type="text" value="" [placeholder]="filterConditions[filterIndex].filter_name"
+            [(ngModel)]="filterConditions[filterIndex].filter_value"></ion-input>
+        </ion-item>
+        <ion-item *ngSwitchCase="'real_number'">
+          <ion-input type="number" [placeholder]="filterConditions[filterIndex].filter_name"
+            [(ngModel)]="filterConditions[filterIndex].filter_value"></ion-input>
+        </ion-item>
+        <ion-item *ngSwitchCase="'big_int'">
+          <ion-input type="number" [placeholder]="filterConditions[filterIndex].filter_name"
+            [(ngModel)]="filterConditions[filterIndex].filter_value"></ion-input>
+        </ion-item>
+        <div class="select-time" *ngSwitchCase="'date_time'">
+          <ion-item>
+            <ion-datetime placeholder="开始时间" [(ngModel)]="filterConditions[filterIndex].filter_start_time"
+              displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY MM DD HH mm" [cancelText]="translateService.translateFunc('pad.action_cancel')" [doneText]="translateService.translateFunc('pad.action_ok')" ></ion-datetime>
+          </ion-item>
+          <ion-item>至</ion-item>
+          <ion-item>
+            <ion-datetime placeholder="结束时间" [(ngModel)]="filterConditions[filterIndex].filter_end_time"
+              displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY MM DD HH mm" [cancelText]="translateService.translateFunc('pad.action_cancel')" [doneText]="translateService.translateFunc('pad.action_ok')" ></ion-datetime>
+          </ion-item>
+        </div>
+        <div class="select-time" *ngSwitchCase="'date'">
+          <ion-item>
+            <ion-datetime placeholder="开始时间" [(ngModel)]="filterConditions[filterIndex].filter_start_time"[cancelText]="translateService.translateFunc('pad.action_cancel')"
+            [doneText]="translateService.translateFunc('pad.action_ok')" displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY MM DD HH mm"></ion-datetime>
+          </ion-item>
+          <ion-item>至</ion-item>
+          <ion-item>
+            <ion-datetime placeholder="结束时间" [(ngModel)]="filterConditions[filterIndex].filter_end_time" 
+            displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY MM DD HH mm" [cancelText]="translateService.translateFunc('pad.action_cancel')" [doneText]="translateService.translateFunc('pad.action_ok')" ></ion-datetime>
+          </ion-item>
+        </div>
+        <div *ngSwitchCase="'select_one'">
+          <ion-searchbar (ionInput)="searchSelectItems($event, filterConditions[filterIndex])" placeholder="输入查询条件">
+          </ion-searchbar>
+          <ion-list radio-group [(ngModel)]="filterConditions[filterIndex].filter_value">
+            <ion-item
+              *ngFor="let option of (newOptions.length > 0 ? newOptions : filterConditions[filterIndex].filter_des.options)">
+              <ion-label>{{option.label}}</ion-label>
+              <ion-radio name="filterConditions[filterIndex].filter_value" [value]="option.value"></ion-radio>
+            </ion-item>
+          </ion-list>
+        </div>
+        <ion-item *ngSwitchDefault>
+          <ion-input type="text" value="" [placeholder]="filterConditions[filterIndex].filter_name"
+            [(ngModel)]="filterConditions[filterIndex].filter_value"></ion-input>
+        </ion-item>
+      </div>
+      <div class="confirm-btn">
+        <button ion-button full (click)="clickConfimSelect(filterConditions[filterIndex])">确定</button>
+      </div>
+    </div>
+  </div>
+  <!-- 新筛选结束 -->
+  <!-- 新选择下属开始 -->
+  <div [ngClass]="{'new-selector-sub': is_select_sub, 'hiddenModal': !is_select_sub}">
+      <div class="top-content">
+        <!-- <div class="search-box">
+            <ion-searchbar placeholder="搜索" (ionInput)="getItems($event)"></ion-searchbar>
+        </div> -->
+        <div class="operation">
+          <div [ngClass]="{'visible': rootSelect.is_root, '': !rootSelect.is_root}" (click)="backToUpper()"><ion-icon name="arrow-back"></ion-icon>&nbsp;&nbsp;&nbsp;上一级</div>
+          <div><ion-checkbox color="primary" [(ngModel)]="is_territory" (ionChange)="checkTerritory($event)"></ion-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;仅查看选中岗位数据</div>
+        </div>
+        <div class="list">
+            <div  *ngFor="let sub of rootSelect.children" [ngClass]="{'current-duty': sub.isCurrent, 'current-duty bgcolor': !sub.isCurrent}" (click)="changRootSelect(sub, rootSelect)">
+              <div class="left">
+                  <ion-checkbox color="primary" (ionChange)="print(sub)" [(ngModel)]="sub.isChecked"></ion-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <div>
+                    <span>{{sub.name}}</span>
+                    <span>{{sub.territory_name}}</span>
+                  </div>
+              </div>
+              <div [ngClass]="{'right': sub.isShow, 'right visible': !sub.isShow}">
+                  <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="bottom-btn">
+        <div class="left-btn">
+          <button color="primary" ion-button full (click)="cleardata()">重置条件</button>
+        </div>
+        <div class="right-btn">
+            <button ion-button full (click)="confirmSelect()">确定</button>
+        </div>
+      </div>
+  </div>
+  <!-- 新选择下属结束 -->
+<ion-content>
+  <!-- <ion-list-header class="selectComp"> -->
+    <div class="selectItems selectComp" [style.display]="filterDisplay">
+      <!-- 排序按钮，微信暂无排序 -->
+      <!-- <div class="clickItem" *ngIf="otherConditions.length > 0">
+        <ion-item>
+          <ion-label (click)="clickPaixu()" class="selectLabelStyle">
+            <ion-icon style="color: gray" class="ffa fa-exchange"></ion-icon>&nbsp;&nbsp;排序
+          </ion-label>
+        </ion-item>
+      </div> -->
+      <div class="clickItem" *ngIf="otherConditions.length > 0 || filterConditions.length > 0">
+        <ion-item>
+          <ion-label (click)="clickOtherFilter()" class="selectLabelStyle">
+            <ion-icon style="color: gray" class="ffa fa-filter"></ion-icon>&nbsp;&nbsp;筛选
+          </ion-label>
+        </ion-item>
+      </div>
+      <div class="clickItem" *ngIf="this.listService.isSelectTree && this.listService.selectTree.length > 0">
+        <ion-item>
+          <ion-label (click)="getSelectModel()" class="selectLabelStyle">
+            <ion-icon style="color: gray" class="ffa fa-sitemap"></ion-icon>&nbsp;&nbsp;选择下属
+          </ion-label>
+        </ion-item>
+      </div>
+    </div>
+  <!-- </ion-list-header> -->
+  <!-- 新排序开始(微信暂时没有排序) -->
+  <!-- <div [ngClass]="{'selectModal': is_show_paixu, 'hiddenModal': !is_show_paixu}">
+      <div [ngClass]="{'active': paixuIndex === 1, '': !(paixuIndex === 1)}" (click)="paixuClick(1)">按照创建日期升序</div>
+      <div [ngClass]="{'active': paixuIndex === 2, '': !(paixuIndex === 2)}" (click)="paixuClick(2)">按照创建日期降序</div>
+      <div [ngClass]="{'active': paixuIndex === 3, '': !(paixuIndex === 3)}" (click)="paixuClick(3)">按照修改日期升序</div>
+      <div [ngClass]="{'active': paixuIndex === 4, '': !(paixuIndex === 4)}" (click)="paixuClick(4)">按照修改日期降序</div>
+      <div [ngClass]="{'active': paixuIndex === 5, '': !(paixuIndex === 5)}" (click)="paixuClick(5)">按照创建人排序</div>
+  </div> -->
+  <!-- 新排序结束 -->
+  <ion-list-header>
+    <span
+      item-start>{{translateService.translateFunc('pad.home_total_front')}}{{listService.total}}{{translateService.translateFunc('pad.home_total_unit')}}</span>
+      <div *ngIf="apiName=='customer'" item-end class="fc-list-checkbox">
+        <ion-checkbox dark [(ngModel)]="isChecked" (ionChange)="checkFavorite($event)"></ion-checkbox>
+        <ion-label>{{translateService.translateFunc('pad.home_show_collect')}}</ion-label>
+      </div>
+      <button style="color:#3880ff" ion-button *ngIf="apiName=='alert'" item-end color="light" (click)="batchChangeStatus()">{{translateService.translateFunc('pad.home_mark_readed')}}</button>
+  
+  </ion-list-header>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)" pullMin="60" pullMax="350" closeDuration="500">
+    <ion-refresher-content pullingIcon="arrow-round-down"
+      [pullingText]="translateService.translateFunc('pad.home_action_pull_refresh')" refreshingSpinner="circles"
+      [refreshingText]="translateService.translateFunc('pad.home_action_refreshing')">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col *ngIf="width > 0">
+        <div #insertDiv>
+
+        </div>
+      </ion-col>
+      <ion-col [ngStyle]="colStyle" *ngIf="width > 1">2</ion-col>
+      <ion-col *ngIf="width > 2">3</ion-col>
+      <ion-col *ngIf="width > 3">4</ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="notend">
+    <ion-infinite-scroll-content loadingSpinner="bubbles"
+      [loadingText]="translateService.translateFunc('pad.home_action_push_refresh')">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
+<ion-footer class="fc-list-select-component" [style.display]="listService.footerDisplay">
+  <ion-item>
+    <ion-label (click)="selectAll()">{{translateService.translateFunc('pad.home_select_all')}}</ion-label>
+    <ion-label *ngFor="let action of listService.footerAction" [color]="action.button_class_type"
+      (click)="operateFooterAction(action)">{{action.label}}</ion-label>
+    <ion-note item-end (click)="cancelFooterSelect()" color="danger">
+      {{translateService.translateFunc('pad.action_cancel')}}</ion-note>
+  </ion-item>
+</ion-footer>

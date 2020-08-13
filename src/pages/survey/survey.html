@@ -1,0 +1,19 @@
+<div class="fc-survey-content">
+  <ng-container *ngFor="let section of evaluation.evaluation">
+    <ng-container *ngIf="section.items && section.items.length > 0">
+      <ion-item *ngFor="let field of section.items" item-text-wrap>
+        <ion-label *ngIf="field.label !== 'final_value'" text-wrap class="fc-survey-label">{{field.label}}</ion-label>
+        <ion-label *ngIf="field.label !== 'final_value'" text-wrap class="fc-survey-content">{{field.value}}</ion-label>
+      </ion-item>
+    </ng-container>
+  </ng-container>
+  <ion-list>
+    <ion-list-header>
+      {{translateService.translateFunc('pad.survey_total_title')}}
+    </ion-list-header>
+    <ion-item>
+      <ion-label text-wrap class="fc-survey-label">{{translateService.translateFunc('pad.survey_evaluation')}}：</ion-label>
+      <ion-label text-wrap class="fc-survey-content">{{evaluation.overall_score}}</ion-label>
+    </ion-item>
+  </ion-list>
+</div>

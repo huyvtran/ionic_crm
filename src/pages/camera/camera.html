@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{header}}
+    </ion-title>
+    <ion-buttons end>
+      <button style="padding-left:1rem" ion-button icon-only color="royal" *ngFor="let action of actions" (click)="pageAction(action)">
+        {{action.label}}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="camera-body-container">
+    <div class="camera-body-header">{{this.translateService.translateFunc('label.upload_image')}}</div>
+    <div class="camera-body-list">
+      <div class="camera-item" *ngFor="let pic of unUploadList ,let i = index" (click)="previewImage(pic,i)">
+        <img [src]="pic.url" />
+        <span *ngIf="pic.url" (click)="deletePics(pic.key)">
+          <ion-icon class="camera-item-remove" name="close-circle" color="danger"></ion-icon>
+        </span>
+      </div>
+      <div class="camera-item" *ngIf="unUploadList.length < 9">
+        <img [src]="imgCover" (click)="pictureActionSheet()" />
+      </div>
+    </div>
+  </div>
+  <div class="camera-pic-submit">
+    <button ion-button color="primary" (click)="saveToData()"  >{{this.translateService.translateFunc('action.ok')}}</button>
+  </div>
+</ion-content>

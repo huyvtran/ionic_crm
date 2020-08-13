@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-scroll scrollX='true' scrollY='true' style="width: 100%; height: 100%;">
+      <img [src]="url" style="width:100%; height: 100%;"/>
+  </ion-scroll>
+</ion-content>

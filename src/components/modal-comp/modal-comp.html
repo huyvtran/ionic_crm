@@ -1,0 +1,54 @@
+<div>
+  <ion-list *ngIf="newListData">
+    <ion-list-header>
+      {{header}}
+      <span *ngIf="total">{{translateService.translateFunc('pad.home_total_front')}}{{total}}{{translateService.translateFunc('pad.home_total_unit')}}</span>
+    </ion-list-header>
+    <ng-container *ngIf="newListData.length > 0">
+      <ion-item-sliding *ngFor="let newListItems of newListData;" #slidingItem>
+        <ion-item *ngIf="!newListItems.isPadLayout" (click)="newPickValue(newListItems)">
+          <p *ngFor="let item of newListItems.layout">
+            {{item.label}}{{item.label ? ':' : ''}}{{item.value}}
+          </p>
+        </ion-item>
+        <ion-item *ngIf="newListItems.isPadLayout" (click)="newPickValue(newListItems)">
+          <ion-avatar item-start *ngIf="newListItems.padlayout.avatar.exist">
+            <img [src]="newListItems.padlayout.avatar.data">
+          </ion-avatar>
+          <h2 *ngIf="newListItems.padlayout.title.exist">{{ newListItems.padlayout.title.data }}</h2>
+          <h3 *ngIf="newListItems.padlayout.subTitle.exist">{{ newListItems.padlayout.subTitle.data }}</h3>
+          <ng-container *ngFor="let cont of newListItems.padlayout.contents" [ngSwitch]="cont.type">
+            <p *ngSwitchCase="'text'">{{ cont.data }}</p>
+            <p *ngSwitchCase="'expression'">{{ cont.data }}</p>
+          </ng-container>
+          <ion-note item-end>
+            <ng-container *ngFor="let label of newListItems.padlayout.labels" [ngSwitch]="label.type">
+              <ion-badge *ngSwitchCase="'label'" [color]="label.color ? undefined : 'secondary'" [style.background-color]="label.color">{{ label.data }}</ion-badge>
+              <ion-icon *ngSwitchCase="'icon'" name="star" color="danger"></ion-icon>
+            </ng-container>
+          </ion-note>
+        </ion-item>
+        <ion-item-options side="right" *ngIf="newListItems.rightOptions">
+          <button ion-button color="primary" *ngFor="let option of newListItems.rightOptions" (click)="handlerActions(option, newListItems); closeSlide(slidingItem)">
+            {{option.label ? option.label : getRowActionLabel(option)}}
+          </button>
+        </ion-item-options>
+        <ion-item-options side="left" *ngIf="newListItems.leftOptions">
+          <button ion-button color="primary" *ngFor="let option of newListItems.leftOptions" (click)="handlerActions(option, newListItems); closeSlide(slidingItem)">
+            {{option.label ? option.label : getRowActionLabel(option)}}
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+    <ng-container *ngIf="newListData.length === 0">
+      <ion-grid>
+        <ion-row>
+          {{translateService.translateFunc('pad.partici_nothing')}}{{header}}{{translateService.translateFunc('pad.partici_data')}}
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </ion-list>
+  <div class="fc-crm-action-list">
+    <button *ngFor="let action of actions" (click)="addData(action)" [disabled]="action.disabled" ion-button block>{{action.label}}</button>    
+  </div>
+</div>

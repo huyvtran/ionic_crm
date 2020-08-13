@@ -1,0 +1,32 @@
+list {
+  ion-icon {
+    padding: 0.2rem;
+  }
+  ion-col {
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  ion-item-sliding {
+    h2,h3 {
+      display: inline-block;
+    }
+    ion-note>ion-badge,ion-note>ion-icon {
+      display: block;
+    }
+    ion-note[item-end] {
+      text-align: right;
+    }
+  }
+  .list-ios ion-item-options {
+    border-bottom: 0px;
+    background-color: #1496f0;
+  }
+  .fc-list-checkbox{
+    display: flex;
+    flex-direction: row;
+    font-size: 0.85rem
+  }
+}

@@ -1,0 +1,22 @@
+<ion-header>
+<ion-navbar color="webHeader">
+    <ion-title>
+        {{translateService.translateFunc('tab.my_to_do')}}
+    </ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content class="fc-crm-main">
+    <ion-list *ngIf="newDisplayList.length > 0">
+        <ion-item *ngFor="let disp of newDisplayList">
+            <p item-start (click)="gotoDetail(disp)">
+                <ion-badge [style.background-color]="disp.renderTag.background_color" [style.color]="disp.renderTag.color">{{
+                    disp.renderTag.value
+                    }}</ion-badge>
+                
+            </p>
+            {{getContent(disp.renderContents)}}
+            <p item-end>{{getContent(disp.endContents)}}<ion-icon style="padding-left: 10px" class="ffa fa-angle-right"></ion-icon>
+            </p>
+        </ion-item>
+    </ion-list>
+</ion-content>

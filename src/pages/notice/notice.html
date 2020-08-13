@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      {{translateService.translateFunc('pad.notice_name')}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content no-padding>
+  <ion-list>
+    <ion-list-header>
+      {{translateService.translateFunc('pad.notice_notice_lately')}}
+    </ion-list-header>
+
+    <ion-item *ngFor="let notice of noticeList" tappable (click)="showNoticeDetail(notice)">
+      <h2>{{notice.name}}</h2>
+      <h3 item-end>{{convertTimeStamp(notice.publish_date)}}</h3>
+      <p>{{notice.description.substring(0, 100)}}</p>
+      <ion-badge color="danger" *ngIf="notice.priority == 1" item-end>{{translateService.translateFunc('pad.notice_important')}}</ion-badge>
+      <ion-badge color="secondary" *ngIf="notice.priority == 2" item-end color="secondary">{{translateService.translateFunc('pad.notice_normal')}}</ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-title>
+      {{translateService.translateFunc('pad.clm_media_select')}}
+    </ion-title>
+    <ion-buttons end small>
+      <button ion-button (click)="close()">
+        {{translateService.translateFunc('pad.action_close')}}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-list-header>{{translateService.translateFunc('pad.clm_media_select_one')}}</ion-list-header>
+    <button ion-item *ngFor="let listItem of clmList" [disabled]="listItem.select" (click)="returnClmInfo(listItem)">
+      {{ listItem.name }}
+      <ion-badge color="secondary" *ngIf="listItem.select">{{translateService.translateFunc('pad.clm_media_add_already')}}</ion-badge>
+    </button>
+  </ion-list>
+</ion-content>

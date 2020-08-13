@@ -1,0 +1,13 @@
+page-edit {
+  .input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    input {
+      display: flex;
+      text-align: right;
+    }
+  }
+  ion-item.ng-dirty.ng-invalid .item-inner {
+    border-bottom:1px solid red;
+  }
+}

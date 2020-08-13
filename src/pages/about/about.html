@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{translateService.translateFunc('pad.version_about_title')}}SFE
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+
+      <ion-grid class="fc-customer-grid">
+        <ion-row class="fc-customer-logo">
+          <!-- <div>
+            <img [src]= 'customLogoUrl'>
+          </div> -->
+          <div style="margin-top:20px">
+            {{translateService.translateFunc('pad.version_no')}}：{{getVersion()}}
+          </div>
+        </ion-row>
+        <ion-row>
+
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

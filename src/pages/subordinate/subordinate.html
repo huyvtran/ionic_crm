@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span>{{header}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="itemLists.length > 0">
+      <ion-item *ngFor="let item of itemLists" (click)="pickValue(item)">
+        <ion-label>{{item.name}}</ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

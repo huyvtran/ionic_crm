@@ -1,0 +1,46 @@
+<ion-list>
+  <ion-list-header>
+    {{translateService.translateFunc('pad.product_reaction_doc_title')}}
+  </ion-list-header>
+  <ion-item class="product-select">
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col class="product-col">
+          <div *ngFor="let product of products" class="product-item">
+            <ion-item>
+              <ion-label text-wrap>{{product.name}}</ion-label>
+              <ion-checkbox color="primary" (ionChange)="updateProductList($event, product)"></ion-checkbox>
+            </ion-item>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ng-container *ngFor="let product of productList">
+    <ion-item>
+      <ion-label text-wrap text-left color="darkgray">
+        {{product.name}}
+      </ion-label>
+      <ion-select text-right interface="popover" [id]="product.id" [name]="product.id" [(ngModel)]="productValue[product.id]" *ngIf="productLevelKeyValue !== undefined">
+        <ion-option *ngFor="let result of productLevelKeyValue.options" [value]="result.value">{{result.label}}</ion-option>
+      </ion-select>
+      <button ion-button icon-only clear item-end (click)="alertPop(keyMetadata, product, keyResult)">
+        <ion-icon name="add-circle" color="primary"></ion-icon>
+      </button>
+    </ion-item>
+    <ng-container *ngIf="product.message !== undefined">
+      <ion-item *ngFor="let x of product.message">
+        <div item-start class="fc-sub-item"></div>
+        <ion-label text-wrap text-left color="darkgray" class="fc-options-css">
+          {{x.name}}
+        </ion-label>
+        <ion-select text-right interface="popover" [id]="x.id" [name]="x.id" [(ngModel)]="keyMessageValue[product.id+'/'+x.id]">
+          <ion-option *ngFor="let att of changeKeyToMessage(x.reaction_options)" [value]="att.value">{{(att.label)}}</ion-option>
+        </ion-select>
+        <button ion-button icon-only clear item-end (click)="removeItem(product, x)">
+          <ion-icon name="remove-circle" color="danger"></ion-icon>
+        </button>
+      </ion-item>
+    </ng-container>
+  </ng-container>
+</ion-list>

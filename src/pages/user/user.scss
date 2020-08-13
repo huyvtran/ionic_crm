@@ -1,0 +1,20 @@
+page-user{
+  .fc-user-header{
+    display: flex;
+    display: -webkit-flex;
+    align-items: flex-end;
+    .fc-user-header-numer{
+      padding-left: 10px;
+    }
+  }
+  .card-ios{
+    margin: 0;
+    width: 100%;
+    -webkit-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+    border-bottom: 1px solid #eee;
+  }
+  .scroll-content{
+    background-color: white;
+  }
+}

@@ -1,0 +1,63 @@
+comp-detail-form {
+  .list {
+    .item-block {
+      .list-label {
+        color: #666;
+      }
+      .item-value {
+        color: #000;
+      }
+      .item-value-wide {
+        flex: 3;
+      }
+    }
+  }
+}
+comp-detail-form, page-add, page-edit {
+  .list {
+    ion-item.item-bar {
+      .item-inner {
+        border: 0;
+      }
+      p.bar {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        display: block;
+        font-size: 14px;
+        margin: 0;
+      }
+      p.primary_bar{
+        color: #337ab7;
+        border-color: #9ed6ef;
+      }
+      p.success_bar{
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+      }
+      p.info_bar{
+        color: #31708f;
+        background-color: #d9edf7;
+        border-color: #bce8f1;
+      }
+      p.warning_bar{
+        color: #8a6d3b;
+        background-color: #fcf8e3;
+        border-color: #faebcc;
+      }
+      p.danger_bar{
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+      }
+      p.link_bar{
+        color: #2976a5;
+        background-color: #d9e5f7;
+        border-color: #bcd1f1;
+        text-decoration: underline;
+      }
+    }
+  }
+}

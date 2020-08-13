@@ -1,0 +1,28 @@
+page-detail{
+  .fc-menu{
+    position:fixed;
+     width:100%;
+  }
+
+  .fc-menus{
+    border-bottom: 1px solid lightgray;
+    margin:0rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .fc-sub-menu{
+    font-size: 1.7rem;
+  }
+  .fc-submenu-content{
+  padding-left: 0.5rem;
+  }
+  .fc-submenu-arrow{
+  padding-right:0.5rem;
+  }
+  .bar-button-menutoggle-ios ion-icon{
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,6 @@
+<!--共两个div，最外面的是 draggableItem 响应事件。最内部的配置样式，不响应事件-->
+<div #draggableItem [ngStyle]="getDraggableItemStyle()">
+  <div #innerDiv [ngStyle]="getInnerDivStyle()">
+    {{text}}
+  </div>
+</div>

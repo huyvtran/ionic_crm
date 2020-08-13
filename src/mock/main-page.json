@@ -1,0 +1,54 @@
+{
+  "user_info":[
+    {
+      "username" : "testname",
+      "user_id" :"1111111111",
+      "user_account" : "wu@test.com",
+      "user_img" : "data:image/png;base64,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"
+    }
+  ],
+  "user_part" :[
+    {
+       "label" : "earningsales",
+       "value" :"$3232"
+    },
+    {
+      "label" : "viewreport",
+      "value" :"56444"
+    }
+  ],
+  "button":
+    {
+    "label" : "view-report"
+    },
+    "card" :[
+      {
+        "level" :"A级拜访",
+        "number" :"1456"
+      },
+      {
+        "level" :"B级拜访",
+        "number" :"14665"
+      },
+      {
+        "level" :"C级拜访",
+        "number" :"66435"
+      },
+      {
+        "level" :"D级拜访",
+        "number" :"7435"
+      },
+      {
+        "level" :"E级拜访",
+        "number" :"6655"
+      },
+      {
+        "level" :"F级拜访",
+        "number" :"1454"
+      },
+      {
+        "level" :"A级拜访",
+        "number" :"3322"
+      }
+    ]
+}

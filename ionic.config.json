@@ -1,0 +1,8 @@
+{
+  "name": "ionic2",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "id": "ebf66806"
+}

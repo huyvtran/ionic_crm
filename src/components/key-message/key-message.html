@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar color="webHeader">
+        <ion-buttons>
+            <button ion-button icon-only (click)="backToUp()">
+                <ion-icon name="arrow-back"></ion-icon>
+                {{translateService.translateFunc('pad.action_callback')}}
+            </button>
+        </ion-buttons>
+        <ion-title>
+            {{title}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-card>
+        <ion-card-content>
+            <ion-grid class="fc-key-message">
+                <ion-row class="fc-key-message-item">
+                    <ion-item *ngFor="let rst of items">
+                        <ion-label>{{rst.name}}</ion-label>
+                        <ion-checkbox color="primary" [(ngModel)]="rst.is_item_checked"></ion-checkbox>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                </ion-row>
+            </ion-grid>
+            <button ion-button full (click)="confirmSelect()">确定</button>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

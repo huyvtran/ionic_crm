@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{translateService.translateFunc('pad.segmentation_page_title')}}
+    </ion-title>
+    <ion-buttons end>
+      <button style="padding-left:1rem" ion-button icon-only color="royal" (click)="viewSegmentation()">
+        {{translateService.translateFunc('pad.action_next_step')}}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form #formCont="ngForm">
+    <ng-container>
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-6>
+              <ion-item *ngIf="customer !== undefined">
+                <ion-label text-wrap>{{translateService.translateFunc('pad.segmentation_doctor')}}</ion-label>
+                <ion-label text-wrap>{{customer.name}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-6>
+              <ion-item *ngIf="product !== undefined">
+                <ion-label text-wrap>{{translateService.translateFunc('pad.segmentation_product')}}</ion-label>
+                <ion-label text-wrap>{{product.product__r.name}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </ng-container>
+  </form>
+    <iframe id="segIframe" *ngIf="url" [src]="url"
+    style="width: 100%;height:100%;overflow: auto; border: none;"
+    sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin allow-popups allow-forms"
+    ></iframe>
+</ion-content>

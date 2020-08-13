@@ -1,0 +1,33 @@
+page-about{
+  .card-ios {
+    height: calc(100%);
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  .card-content-ios {
+    height: 100%;
+  }
+  .fc-customer-grid{
+    padding: 120px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 90%;
+    .fc-customer-logo{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .fc-customer-bottom{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+}

@@ -1,0 +1,17 @@
+page-survey{
+  .fc-survey-content{
+    padding-top:14px;
+    .fc-survey-label{
+      font-size: 14px;
+      color: #999;
+    }
+    .fc-survey-content{
+      font-size: 14px;
+      color: #555;
+    }
+    .fc-survey-score{
+      font-size:14px;
+      display: flex;
+    }
+  }
+}

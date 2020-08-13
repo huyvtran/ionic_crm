@@ -1,0 +1,38 @@
+<ion-list-header>
+  {{translateService.translateFunc('pad.product_reaction_doc_title')}}
+</ion-list-header>
+<!-- <ion-grid>
+    <ion-row>
+        <ion-col *ngFor="let product of productList">
+            <ion-item>
+                <ion-label>{{product.product__r.name}}</ion-label>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+</ion-grid> -->
+<ion-card *ngFor="let product of productList">
+  <ion-card-header>
+    <ion-row>
+      <ion-col col-8>{{product.product__r.name}}</ion-col>
+      <ion-col col-4 text-right>
+        {{product.reaction !== undefined ? getReaction(product.reaction) : '-'}}
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+  <ion-list inset *ngIf="product.message !== undefined">
+    <ion-item *ngFor="let x of product.message">
+      <ion-row *ngIf="recordId">
+        <ion-col col-10 text-left class="fc_list_title">{{x.message ? x.message.name : x.key_message__r.name}}</ion-col>
+        <ion-col col-2 text-right class="fc-options-css">
+          {{getReaction(x.key ? x.key.reaction : x.reaction)}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="fakeId && !recordId">
+        <ion-col col-10 text-left class="fc_list_title">{{x.key_message__r.name}}</ion-col>
+        <ion-col col-2 text-right class="fc-options-css">
+          {{getReaction(x.reaction)}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+</ion-card>

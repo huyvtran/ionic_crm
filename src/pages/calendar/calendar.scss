@@ -1,0 +1,89 @@
+page-calendar{
+  .fc-calender-labels{
+    padding-top: 1.5rem;
+    .fc-calender-label{
+      margin: 0.5rem 0.2rem;
+    }
+  }
+  .fc-calender-content{
+    background: #FFF;
+    padding: 1.5rem;
+  }
+  .fc-content{
+    display: none;
+  }
+  .fc-event{
+    position: relative;
+    display: none;
+  }
+  tbody tr:first-child td:first-child{
+    .fc-event{
+      display: block;
+    }
+  }
+  .fc-event-container{
+    color:red;
+  }
+  .fc-calender-legend1{
+    padding: 5px;
+    margin: 0.5rem 0.5rem;
+    border-radius: 3px;
+    border: 1px solid lightgray;
+  }
+  .fc-calender-legend2{
+    border: 1px solid lightgray;
+    padding: 5px;
+    margin: 0.5rem 0.5rem;
+    border-radius: 3px;
+    color: lightgray;
+  }
+  .select-day{
+    padding: .5rem 1.5rem 1.5rem 1.5rem;
+    font-size: 1.7rem;
+  }
+  .eventCard{
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid #eee;
+    padding: 1rem;
+    margin: 0 1.5rem;
+  }
+  .eventCard:hover{
+    background-color: #eee;
+  }
+  .eventDoid{
+    display: flex;
+    height: 10px;
+    width: 10px;
+    border-radius: 5px;
+    margin: 25px 20px 10px 10px;
+    align-content: center;
+
+  }
+
+  .eventContent{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    .contentFront{
+      .title{
+        display: flex;
+        font-size: 1.7rem;
+      }
+      max-width: 50%;
+    }
+    .card-content{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      p{
+        font-size: 1.5rem;
+      }
+      p:nth-child(2){
+        margin: 10px;
+      }
+    }
+  }
+}

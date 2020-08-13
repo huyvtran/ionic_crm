@@ -1,0 +1,110 @@
+<ion-split-pane id="backInfo">
+  <ion-menu [content]="content" *ngIf="showit">
+    <ion-header>
+      <ion-toolbar color="webHeader">
+        <ion-title class="custom-logo">
+          <!-- <img item-start [src]="customLogoUrl" (click)="refreshApp()"> -->
+          <span>蜂巢系统</span>
+        </ion-title>
+
+        <ion-buttons end>
+          <button ion-button icon-only *ngIf="alertTab" (click)="openPage(alertTab)">
+            <ion-icon class="ffa fa-envelope">
+              <ion-badge *ngIf="newAlertsCount > 0" id="alert-badge" color="danger">{{newAlertsCount}}
+              </ion-badge>
+            </ion-icon>
+          </button>
+          <!-- <button ion-button icon-only (click)="presentLoading()">
+            <ion-icon class="ffa fa-refresh"></ion-icon>
+          </button> -->
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list *ngIf="!activeList">
+        <ng-container [ngSwitch]="menuType">
+          <ng-container *ngSwitchCase="'sub'">
+            <div (click)="backToMainInfo()">
+              <ion-item style="background-color:rgb(238,238,238); border-bottom:lightgray 1px solid;">
+                <ion-icon name="bookmark" item-start></ion-icon>
+                {{header}}
+              </ion-item>
+            </div>
+            <div *ngFor="let rA of relatedActions" (click)="relatedAction(rA)">
+              <ion-item style="background-color:rgb(238,238,238); border-bottom:lightgray 1px solid;">
+                <ion-icon name="bookmark" item-start></ion-icon>
+                {{rA.label}}
+              </ion-item>
+            </div>
+            <button ion-item *ngFor="let x of tabs" (click)="openRelatePage(x)">
+              <ion-icon name="pricetag" color="icon" item-start></ion-icon>
+              {{x.title}}
+              <span *ngIf="x.count !== undefined">（{{x.count}}）</span>
+            </button>
+          </ng-container>
+          <ng-container *ngSwitchCase="'main'">
+            <button ion-item (click)="gotoMainPage()">
+              <ion-icon name="home" color="icon" item-start></ion-icon>
+              {{translateService.translateFunc('pad.main_menu_name')}}
+            </button>
+            <!-- <button ion-item (click)="gotoCalendarPage()">
+              <ion-icon name="calendar" color="icon" item-start></ion-icon>
+              {{translateService.translateFunc('pad.main_menu_calender')}}
+            </button> -->
+            <button ion-item *ngFor="let x of tabs" (click)="openPage(x)">
+              <ion-icon name="{{matchIcon(x)}}" color="icon" item-start></ion-icon>
+              {{translateLanguage(x) === undefined ? x.label : translateLanguage(x)}}
+            </button>
+            <!-- <button ion-item (click)="gotoNoticePage()">
+              <ion-icon name="bookmark" color="icon" item-start></ion-icon>
+              {{translateService.translateFunc('pad.main_menu_notice')}}
+            </button> -->
+            <button ion-item (click)="gotoUserPage()">
+              <ion-icon name="contact" color="icon" item-start></ion-icon>
+              {{translateService.translateFunc('pad.main_menu_user')}}
+            </button>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <button ion-item (click)="gotoMainPage()">
+              <ion-icon name="home" color="icon" item-start></ion-icon>
+              {{translateService.translateFunc('pad.main_menu_name')}}
+            </button>
+            <button ion-item *ngFor="let x of tabs" (click)="openPage(x)">
+              <ion-icon name="{{matchIcon(x)}}" color="icon" item-start></ion-icon>
+              {{translateLanguage(x) === undefined ? x.label : translateLanguage(x)}}
+            </button>
+            <!-- <button ion-item (click)="gotoCalendarPage()">
+              <ion-icon name="calendar" color="icon" item-start></ion-icon>
+              {{translateService.translateFunc('pad.main_menu_calender')}}
+            </button>
+            <button ion-item (click)="gotoNoticePage()">
+              <ion-icon name="bookmark" color="icon" item-start></ion-icon>
+              {{translateService.translateFunc('pad.main_menu_notice')}}
+            </button> -->
+            <button ion-item (click)="gotoUserPage()">
+              <ion-icon name="contact" color="icon" item-start></ion-icon>
+              {{translateService.translateFunc('pad.main_menu_user')}}
+            </button>
+          </ng-container>
+        </ng-container>
+      </ion-list>
+      <ion-list *ngIf="activeList">
+        <ion-item>
+         添加人员
+        </ion-item>
+        <ion-item-sliding *ngFor="let item of activeListData" #slidingItem>
+          <ion-item>
+            {{item.name}}
+          </ion-item>
+          <ion-item-options side="left">
+            <button ion-button color="danger" (click)="deleteEventData(item); closeSlide(slidingItem)">
+              {{translateService.translateFunc('pad.action_delete')}}
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-nav id="nav" #content main [root]="rootPage"></ion-nav>
+</ion-split-pane>

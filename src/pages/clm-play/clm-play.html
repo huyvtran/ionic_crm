@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <ion-title>
+      {{ clmName }}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="buttonBack()">
+        <ion-icon class="ffa fa-navicon" *ngIf="!clmPopType"></ion-icon>
+        <ion-icon class="ffa fa-times" *ngIf="clmPopType"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <iframe id="islide" [src]="playURL | safe" *ngIf="playURL" ion-fixed></iframe>
+  <div *ngIf="!playURL">{{this.translateService.translateFunc('pad.clm_media_load_module')}}</div>
+</ion-content>

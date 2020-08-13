@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <ion-title>{{translateService.translateFunc('pad.view_page_title')}}</ion-title>
+    <ion-buttons end>
+      <button *ngIf="status" style="padding-left:1rem" ion-button icon-only color="royal" [disabled]="!submitStatus" (click)="ChangeSegmentation()">
+        {{translateService.translateFunc('pad.action_edit')}}
+      </button>
+      <button *ngIf="!status" style="padding-left:1rem" ion-button icon-only color="royal" (click)="submitUserLevel()">
+        {{translateService.translateFunc('pad.action_submit')}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item *ngIf="customer !== undefined">
+            <ion-label text-wrap>{{translateService.translateFunc('pad.segmentation_doctor')}}</ion-label>
+            <ion-label text-wrap>{{customer.name}}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item *ngIf="product !== undefined">
+            <ion-label text-wrap>{{translateService.translateFunc('pad.segmentation_product')}}</ion-label>
+            <ion-label text-wrap>{{product.product__r.name}}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 *ngIf="preLevel === undefined">
+          <ion-item>
+            {{translateService.translateFunc('pad.view_wait_remind')}}
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item *ngIf="preLevel !== undefined">
+            <ion-label text-wrap>{{translateService.translateFunc('pad.view_overall_segmentation')}}</ion-label>
+            <ion-label text-wrap style="text-align:right">{{preLevel}}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item *ngIf="userLevel !== undefined">
+            <ion-label text-wrap>{{translateService.translateFunc('pad.view_adjust_segmentation')}}</ion-label>
+            <ion-select [(ngModel)]="userLevel" [disabled]="status" interface="popover">
+              <ion-option value="1">{{translateService.translateFunc('pad.view_level_A')}}</ion-option>
+              <ion-option value="2">{{translateService.translateFunc('pad.view_level_B')}}</ion-option>
+              <ion-option value="3">{{translateService.translateFunc('pad.view_level_C')}}</ion-option>
+              <ion-option value="4">{{translateService.translateFunc('pad.view_level_V')}}</ion-option>
+              <ion-option value="0">{{translateService.translateFunc('pad.view_level_N')}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+        <ion-col [hidden]="submitStatus || theState">
+          <button class="button" type="submit" ion-button block (click)="refreshLevel()">{{translateService.translateFunc('pad.view_level_refresh')}}</button>
+        </ion-col>
+        <ion-col>
+          <button class="button" type="submit" ion-button block [disabled]="!submitStatus" (click)="submitLevel()">{{translateService.translateFunc('pad.view_level_submit_segmentation')}}</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-content>

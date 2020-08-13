@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span style="display:flex;align-items:center;" *ngIf="searchVisible">
+        <ion-input type="text" class="searchBox" [placeholder]="placeHolder" [(ngModel)]="searchBoxValue"></ion-input>
+        <span (click)="searchList()">
+          <ion-icon class="fa fa-search" color="lightcyan" item-start></ion-icon>
+        </span>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="itemLists.length > 0">
+      <ion-item *ngFor="let item of itemLists" (click)="pickValue(item)">
+        <ion-label>{{item.label}}</ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

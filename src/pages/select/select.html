@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons start>
+      <button ion-button (click)="clear()" small>
+        {{translateService.translateFunc('pad.action_clear')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{translateService.translateFunc('pad.selector_condition')}}
+    </ion-title>
+    <ion-buttons end small>
+      <button ion-button (click)="onsubmit()">
+        {{translateService.translateFunc('pad.action_ok')}}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="fc-select-content">
+  <ion-card>
+    <ion-card-content>
+      <ion-grid class="fc-select-grid">
+        <ion-row *ngFor="let fil of filter; let i=index">
+          <ion-col *ngIf="fil.field.type !== none">
+            <ion-select color="darkgray" [id]="fil.field.key" [name]="fil.field.key" [(ngModel)]="fil.field.value" (ngModelChange)="changeField(i)"
+              interface="popover">
+              <ion-option [value]="item.name" *ngFor="let item of fieldList">{{item.label}}</ion-option>
+            </ion-select>
+          </ion-col>
+          <ion-col *ngIf="fil.operator.type !== 'none'">
+            <ion-select color="darkgray" [id]="fil.operator.key" [name]="fil.operator.key" [(ngModel)]="fil.operator.value" interface="popover">
+              <ion-option [value]="item.value" *ngFor="let item of operatorOptions[fil.operator.type]">{{item.label}}</ion-option>
+            </ion-select>
+          </ion-col>
+          <ion-col *ngFor="let fiil of fil.value" [ngSwitch]="fiil.type">
+            <ion-datetime *ngSwitchCase="'date'" [displayFormat]="fiil.format" [pickerFormat]="fiil.format" [id]="fiil.key" [name]="fiil.key"
+              [(ngModel)]="fiil.value"></ion-datetime>
+            <ion-select *ngSwitchCase="'select_one'" [id]="fiil.key" [name]="fiil.key" [(ngModel)]="fiil.value" interface="popover">
+              <ion-option [value]="option.value" *ngFor="let option of this.fieldDesList[fil.field.value].options">{{translateLabel(this.fieldDesList[fil.field.value], option)}}</ion-option>
+            </ion-select>
+            <ion-select multiple="true" *ngSwitchCase="'select_many'" [id]="fiil.key" [name]="fiil.key" [(ngModel)]="fiil.value">
+              <ion-option [value]="option.value" *ngFor="let option of this.fieldDesList[fil.field.value].options">{{translateLabel(this.fieldDesList[fil.field.value], option)}}</ion-option>
+            </ion-select>
+            <ion-toggle *ngSwitchCase="'boolean'" [id]="fiil.key" [name]="fiil.key" [(ngModel)]="fiil.value"></ion-toggle>
+            <ion-input *ngSwitchDefault color="darkgray" type="text" [id]="fiil.key" [name]="fiil.key" [(ngModel)]="fiil.value"></ion-input>
+          </ion-col>
+          <span (click)="delFilter(i)">
+            <ion-icon name="remove-circle" color="danger"></ion-icon>
+          </span>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col justify-content-center>
+            <button ion-button (click)="addSelect()" color="light" block small>
+              <ion-icon name="add"></ion-icon>&nbsp;{{translateService.translateFunc('pad.selector_add_condition')}}
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

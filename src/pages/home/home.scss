@@ -1,0 +1,283 @@
+page-home {
+    .fc-list-checkbox {
+        display: flex;
+        flex-direction: row;
+        font-size: 14px;
+    }
+
+    ion-list-header.item-ios .button-default {
+        font-size: 14px;
+        background: #fff;
+        padding: 16px 8px;
+    }
+
+    ion-list-header {
+        max-height: 4rem;
+    }
+
+    .list-header-ios {
+        border-bottom: 1px solid white;
+    }
+
+    .fc-list-select-component {
+        border-top: 1px solid #eee;
+    }
+
+    .selectComp {
+        background-color: white;
+        padding: 0;
+    }
+
+    .selectItems {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .selectLabelStyle {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        color: gray;
+    }
+
+    .selectLabelStyle2 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        color: rgb(77, 146, 233);
+    }
+
+    .selectModal {
+        position: fixed;
+        left: 0;
+        top: 4rem;
+        height: 10rem;
+        background-color: white;
+        z-index: 1000;
+        border-top: 1px solid #eee;
+        width: 100%;
+
+        div {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #eee;
+
+            &.active {
+                background-color: lightseagreen;
+            }
+        }
+    }
+
+    .hiddenModal {
+        display: none;
+    }
+
+    .clickItem {
+        border-right: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        &:nth-last-child(1) {
+            border-right: 1px solid white;
+        }
+    }
+
+    .gridstyle {
+        width: 100%;
+        padding: 2rem;
+        min-height: 250px;
+        background-color: #eee;
+        margin: 0;
+    }
+
+    .button-ios {
+        height: 2.8em;
+        font-size: 1.6rem;
+        color: #fff;
+        background-color: #4990ec;
+        margin: 0;
+        padding: 0;
+    }
+
+    // new selector
+    .new-selector {
+        background: white;
+        height: calc(100% - 4rem);
+        width: 100%;
+        z-index: 1000;
+        border-top: 1px solid #eee;
+        position: relative;
+        left: 0;
+        top: 4rem;
+        display: flex;
+        flex-direction: row;
+
+        .left-layout {
+            width: 30%;
+            height: 100%;
+            background-color: #ccc;
+            position: relative;
+
+            .left-select-item {
+                padding: 1rem 0 1rem 2.5rem;
+            }
+
+            .active {
+                padding: 1rem 0 1rem 2.5rem;
+                background: white;
+            }
+
+            .reset-btn {
+                position: absolute;
+                width: 100%;
+                bottom: 0;
+
+                button {
+                    background: white;
+                    color: gray;
+                }
+            }
+        }
+
+        .right-layout {
+            height: 100%;
+            background: white;
+            flex: 1;
+
+            .right-content {
+                .searchbar {
+                    background: white;
+                }
+
+                .select-time {
+                    display: flex;
+                    flex-direction: column;
+                    align-content: center;
+                    align-items: center;
+                    padding-top: 2rem;
+                }
+            }
+
+            .confirm-btn {
+                position: absolute;
+                width: 100%;
+                bottom: 0;
+
+                .button-inner {
+                    padding-left: 33%;
+                    justify-content: flex-start;
+                }
+            }
+        }
+    }
+
+    .new-selector-sub {
+        background: white;
+        height: calc(100% - 8rem);
+        width: 100%;
+        z-index: 1000;
+        border-top: 1px solid #eee;
+        position: relative;
+        left: 0;
+        top: 8rem;
+        display: flex;
+        flex-direction: column;
+
+        .top-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .operation {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem;
+                border-bottom: 1px solid #eee;
+
+                div {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                }
+            }
+
+            .visible {
+                visibility: hidden;
+            }
+
+            .list {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-height: 53rem;
+                overflow-y: scroll;
+                .bgcolor {
+                    background: #eee;
+                }
+
+                .current-duty {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    width: 100%;
+                    padding: 1rem 2rem;
+                    align-items: center;
+                    border-bottom: 1px solid #eee;
+
+                    .left {
+                        display: flex;
+                        align-items: center;
+
+                        div {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            span:nth-child(2) {
+                                font-size: 1rem;
+                                color: gray;
+                                padding-top: .5rem;
+                            }
+                        }
+                    }
+
+                    .right {
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+
+        .bottom-btn {
+            background: rebeccapurple;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-top: 1px solid #eee;
+
+            .left-btn {
+                width: 30%;
+
+                button {
+                    background: white;
+                    color: gray;
+                }
+            }
+
+            .right-btn {
+                flex: 1;
+            }
+        }
+    }
+}

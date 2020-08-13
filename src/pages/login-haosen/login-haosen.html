@@ -1,0 +1,28 @@
+<ion-grid class="login-container" >
+    <ion-row align-items-center justify-content-center class="login-box-row">
+      <ion-col class="login-box" class="login-box-mobile">
+        <div class="crmpower-logo-haosen">LOGIN</div>
+        <div class="info"> <span>账号密码登录</span></div>
+        
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+          <ion-list class="form-list">
+            <ion-item class="info-item">
+              <ion-label text-wrap><span class="info-icon user"></span></ion-label>
+              <ion-input type="text" placeholder="&nbsp;&nbsp;username" name="username" [(ngModel)]="login.username" required clearInput (ionFocus)="showAutocomplete()"
+                (ionBlur)="hideAutocomplete()"></ion-input>
+            </ion-item>
+            <ion-item  class="info-item">
+              <ion-label text-wrap ><span class="info-icon pass"></span></ion-label>
+              <ion-input type="password" placeholder="&nbsp;&nbsp;password" name="password" [(ngModel)]="login.password" required></ion-input>
+            </ion-item>
+          </ion-list>
+          <button class="loginBtn" type="submit" ion-button block  [disabled]="!loginForm.form.valid || loader">
+             <i class="fa fa-sign-in" *ngIf="!loader"></i>
+             <i class="fa fa-refresh fa-spin" *ngIf="loader"></i> 
+            {{translateService.translateFunc('pad.login_action_login')}}
+          </button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  

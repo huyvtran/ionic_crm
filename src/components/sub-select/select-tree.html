@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <ion-title>{{header}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label>
+      {{this.translateService.translateFunc('pad.product_all_select')}}
+    </ion-label>
+    <ion-checkbox [(ngModel)]="isSelectAll" (click)="checknewCurrentAll()"></ion-checkbox>
+  </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let select of selectTree">
+      <ion-avatar></ion-avatar>
+      <ion-label>
+        {{select.name}}
+      </ion-label>
+      <ion-checkbox [(ngModel)]="select.checked" (click)="checkName(select)"></ion-checkbox>
+      <button *ngIf="grandParent" ion-button clear color="danger" style="border-left:1px solid #ccc; border-right:1px solid #ccc"
+        item-end (click)="selectUp(select)">{{this.translateService.translateFunc('pad.select_comp_uplevel')}}</button>
+      <button *ngIf="select.isHaveSubPerson" ion-button clear item-end style="border-left:1px solid #ccc; border-right:1px solid #ccc"
+        (click)="selectDown(select)">{{this.translateService.translateFunc('pad.select_comp_downlevel')}}</button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer style="border-top:1px solid #ccc">
+  <ion-item>
+    <ion-label item-start>{{this.translateService.translateFunc('pad.select_comp_chioced')}}：{{checkList.length}}
+      <span *ngIf="checkList.length > 0">{{this.translateService.translateFunc('pad.select_comp_unit')}}</span>
+    </ion-label>
+    <button ion-button color="danger" clear item-end (click)="cancelSelect()">{{this.translateService.translateFunc('pad.action_cancel')}}</button>
+    <button ion-button clear item-end (click)="confirmSelect()">{{this.translateService.translateFunc('pad.action_ok')}}</button>
+  </ion-item>
+</ion-footer>

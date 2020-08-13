@@ -1,0 +1,36 @@
+.product_value{
+
+}
+comp-product {
+  .product-select {
+    .product-col {
+      flex-wrap: wrap;
+      display: flex;
+      .product-item {
+        display: inline-block;
+        .item-block .item-inner {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+  .item-ios .item-button[icon-only] {
+    margin: 0;
+    padding: 8px 14px;
+    height: 40px;
+  }
+
+  .fc-options-css{
+    font-size: 80%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+}
+
+.fc-alert-css{
+  .alert-wrapper{
+    min-width: 80%;
+  }
+  .alert-checkbox-label{
+    white-space: pre-wrap;
+  }
+}

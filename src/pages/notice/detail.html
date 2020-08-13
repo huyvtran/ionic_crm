@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>{{translateService.translateFunc('pad.notice_page_title')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <h2 ion-text text-center>{{notice.name}}</h2>
+  <pre style="word-wrap: break-word; white-space: pre-wrap;">{{notice.description}}</pre>
+</ion-content>

@@ -1,0 +1,286 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{header}}
+    </ion-title>
+    <ion-buttons end>
+      <button style="padding-left:1rem" ion-button icon-only color="royal" *ngFor="let action of actions" (click)="pageAction(action)">
+        {{action.label}}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form #formCont="ngForm">
+    <ng-container *ngFor="let comp of components">
+      <ion-list *ngFor="let section of comp.sections">
+        <ion-list-header *ngIf="section.title">
+          {{section.title}}
+        </ion-list-header>
+        <ion-grid no-padding>
+          <ion-row>
+            <ng-container *ngFor="let item of section.formItems">
+              <ion-col col-12 [ngSwitch]="item.type">
+                <ion-item *ngSwitchCase="'text'">
+                  <ion-label text-wrap [style.color]="item.disabled?'darkgrey':''">
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="text" [id]="item.key" [name]="item.key" [(ngModel)]="item.value" [required]="item.is_required?'':undefined"
+                    [pattern]="item.pattern?item.pattern:undefined" [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'real_number'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="number" [id]="item.key" [name]="item.key" [(ngModel)]="item.value" [required]="item.is_required?'':undefined"
+                    [pattern]="item.pattern?item.pattern:undefined" [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'big_int'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="text" [id]="item.key" [name]="item.key" [(ngModel)]="item.value" [required]="item.is_required?'':undefined"
+                    [pattern]="item.pattern?item.pattern:undefined" [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'long_text'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-textarea type="text" [id]="item.key" [name]="item.key" [(ngModel)]="item.value" [required]="item.is_required?'':undefined"
+                    [pattern]="item.pattern?item.pattern:undefined" [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-textarea>
+                </ion-item>
+                <ion-item *ngSwitchCase="'checkbox'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-checkbox color="blue" checked="false" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [disabled]="item.disabled"
+                    [(ngModel)]="item.value" (ionChange)="dataChange(item)">
+                    <ion-option *ngFor="let opt of item.options" [value]="opt.value">{{ opt.label }}</ion-option>
+                  </ion-checkbox>
+                </ion-item>
+                <ion-item *ngSwitchCase="'object_link'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="object_link" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <span *ngIf="item.data_source" (click)="getSelectMultiple(item)">
+                  <button *ngSwitchCase="'select_multiple'" ion-item [disabled]="item.disabled">
+                    <ion-label>{{ item.name }}
+                      <span style="color:red" *ngIf="item.is_required">*</span>
+                    </ion-label>
+                    <ion-label item-end text-wrap>{{ item.value }}</ion-label>
+                  </button>
+                </span>
+                <ng-container *ngIf="!item.data_source">
+                  <ion-item *ngSwitchCase="'select_multiple'">
+                    <ion-label text-wrap>
+                      {{item.name}}
+                      <span style="color:red" *ngIf="item.is_required===true">*</span>
+                    </ion-label>
+                    <ion-select multiple="true" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                      [disabled]="item.disabled" [cancelText]="translateService.translateFunc('pad.action_cancel')" [okText]="translateService.translateFunc('pad.action_ok')"
+                      (ionChange)="dataChange(item)">
+                      <ion-option *ngFor="let opt of item.options" [value]="opt.value">{{ opt.label }}</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ng-container>
+                <ion-item *ngSwitchCase="'place_holder'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="place_holder" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'switch'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-toggle color="blue" checked="false" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [disabled]="item.disabled"
+                    [(ngModel)]="item.value" (ionChange)="dataChange(item)">
+                    <ion-option *ngFor="let opt of item.options" [value]="opt.value">{{ opt.label }}</ion-option>
+                  </ion-toggle>
+                </ion-item>
+                <ion-item *ngSwitchCase="'phone'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required">*</span>
+                  </ion-label>
+                  <ion-input type="phone" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" [pattern]="item.pattern?item.pattern:undefined" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'email'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="email" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" email="true" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'img'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="img" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'audio'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="audio" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'video'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="video" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'radio'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-select [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value" [cancelText]="translateService.translateFunc('pad.action_cancel')"
+                    [disabled]="item.disabled" [okText]="translateService.translateFunc('pad.action_ok')" interface="popover"
+                    (ionChange)="dataChange(item)">
+                    <ion-option value=''>{{translateService.translateFunc('pad.warning_select')}}</ion-option>
+                    <ion-option value="true">{{translateService.translateFunc('pad.action_yes')}}</ion-option>
+                    <ion-option value="false">{{translateService.translateFunc('pad.action_no')}}</ion-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item *ngSwitchCase="'date_time'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-datetime [id]="item.key" [name]="item.key" [displayFormat]="item.date_format" [pickerFormat]="item.date_format" max="2020"
+                    [disabled]="item.disabled" [required]="item.is_required?'':undefined" [(ngModel)]="item.value" (ionChange)="dataChange(item)"></ion-datetime>
+                </ion-item>
+                <ion-item *ngSwitchCase="'date'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-datetime [id]="item.key" [name]="item.key" [displayFormat]="item.date_format" [pickerFormat]="item.date_format" max="2020"
+                    [disabled]="item.disabled" [required]="item.is_required?'':undefined" [(ngModel)]="item.value" (ionChange)="dataChange(item)"></ion-datetime>
+                </ion-item>
+                <ion-item *ngSwitchCase="'password'">
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="password" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'star'" > 
+                    <ion-label>{{ item.name }}
+                        <span style="color:red" *ngIf="item.is_required">*</span>
+                    </ion-label>
+                              <ion-label class="star_label"> 
+                                <star-rating [(rating)]="item.value" [max]="max" [readonly]="readonly" [show_label]="item.field.show_label"></star-rating>
+                            </ion-label> 
+                </ion-item>
+                <ng-container *ngIf="!item.need_show_search">
+                  <ion-item *ngSwitchCase="'select_one'">
+                    <ion-label text-wrap>
+                      {{item.name}}
+                      <span style="color:red" *ngIf="item.is_required===true">*</span>
+                    </ion-label>
+                    <ion-select [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value" [cancelText]="translateService.translateFunc('pad.action_cancel')"
+                      [disabled]="item.disabled" [okText]="translateService.translateFunc('pad.action_ok')" interface="popover"
+                      (ionChange)="dataChange(item)">
+                      <ion-option value=''>{{translateService.translateFunc('pad.warning_select')}}</ion-option>
+                      <ion-option *ngFor="let opt of item.options" [value]="opt.value">{{ opt.label }}</ion-option>
+                      <ion-option *ngIf="item.options == undefinded"> </ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ng-container>
+                <ng-container *ngIf="item.need_show_search">
+                  <button *ngSwitchCase="'select_one'" ion-item (click)="tapAction($event, item)" [disabled]="item.disabled">
+                    <ion-label>{{ item.name }}
+                      <span style="color:red" *ngIf="item.is_required">*</span>
+                    </ion-label>
+                    <ion-label item-end text-wrap>{{ getValueSelectOne(item) }}</ion-label>
+                  </button>
+                </ng-container>
+                <button *ngSwitchCase="'image_upload'" ion-item (click)="tapAction($event, item)" [disabled]="item.disabled">
+                  <ion-label>{{ item.name }}
+                    <span style="color:red" *ngIf="item.is_required">*</span>
+                  </ion-label>
+                  <ion-label item-end text-wrap>{{ item.number == undefinded ? 0 : item.number }}{{translateService.translateFunc('pad.image_size')}}</ion-label>
+                </button>
+                <ion-item *ngSwitchDefault>
+                  <ion-label text-wrap>
+                    {{item.name}}
+                    <span style="color:red" *ngIf="item.is_required===true">*</span>
+                  </ion-label>
+                  <ion-input type="text" [id]="item.key" [name]="item.key" [required]="item.is_required?'':undefined" [(ngModel)]="item.value"
+                    [disabled]="item.disabled" [pattern]="item.pattern?item.pattern:undefined" (ionChange)="dataChange(item)"></ion-input>
+                </ion-item>
+                <ion-item *ngSwitchCase="'default_bar'" class="item-bar">
+                  <p text-wrap class="bar default_bar">{{item.value}}</p>
+                </ion-item>
+                <ion-item *ngSwitchCase="'primary_bar'" class="item-bar">
+                  <p text-wrap class="bar primary_bar">{{item.value}}</p>
+                </ion-item>
+                <ion-item *ngSwitchCase="'success_bar'" class="item-bar">
+                  <p text-wrap class="bar success_bar">{{item.value}}</p>
+                </ion-item>
+                <ion-item *ngSwitchCase="'info_bar'" class="item-bar">
+                  <p text-wrap class="bar info_bar">{{item.value}}</p>
+                </ion-item>
+                <ion-item *ngSwitchCase="'warning_bar'" class="item-bar">
+                  <p text-wrap class="bar warning_bar">{{item.value}}</p>
+                </ion-item>
+                <ion-item *ngSwitchCase="'danger_bar'" class="item-bar">
+                  <p text-wrap class="bar danger_bar">{{item.value}}</p>
+                </ion-item>
+                <ion-item *ngSwitchCase="'link_bar'" class="item-bar">
+                  <p text-wrap class="bar link_bar">{{item.value}}</p>
+                </ion-item>
+                <button *ngSwitchCase="'relation'" ion-item (click)="tapAction($event, item)" [disabled]="item.disabled">
+                  <ion-label>{{ item.name }}
+                    <span style="color:red" *ngIf="item.is_required">*</span>
+                  </ion-label>
+                  <ion-label item-end text-wrap>{{ item.value }}</ion-label>
+                </button>
+              </ion-col>
+            </ng-container>
+
+          </ion-row>
+        </ion-grid>
+
+      </ion-list>
+    </ng-container>
+    <div #relatedListFields>
+
+    </div>
+    <div *ngIf="recordType === 'report'" #prod>
+
+    </div>
+    <div *ngIf="recordType === 'report' && isCreateClm">
+      <comp-survey-feedback-edit></comp-survey-feedback-edit>
+    </div>
+  </form>
+</ion-content>

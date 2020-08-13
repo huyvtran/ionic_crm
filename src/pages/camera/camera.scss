@@ -1,0 +1,42 @@
+page-camera{
+  .camera-body-container{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .camera-body-header{
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid lightgray;
+  }
+  .camera-body-list{
+    padding: 10px 0 0 20px;
+    color:burlywood;
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+  .camera-item{
+    display: flex;
+    position: relative;
+    .camera-item-remove{
+      position: absolute;
+      right: 5px;
+      top: -5px;
+    }
+    img{
+      width: 80px;
+      margin-right: 10px;
+      height: 80px;
+    }
+  }
+  .camera-pic-submit{
+    display: flex;
+    border-top:1px solid lightgray;
+    margin: 0 10px;
+    justify-content: center;
+    button{
+      margin-top: 20px;
+      width: 30%;
+    }
+  }
+}

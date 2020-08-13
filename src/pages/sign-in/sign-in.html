@@ -1,0 +1,38 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>{{ header }}</ion-title>
+  </ion-navbar>
+</ion-header> -->
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-buttons>
+      <button ion-button icon-only (click)="backToUp()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{translateService.translateFunc('pad.action_callback')}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{ header }}
+    </ion-title>
+    <ion-buttons end *ngIf="!showdetail">
+      <button style="padding-left:1rem" ion-button icon-only color="royal"  (click)="confirm()">
+        签到
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div #map id="map_container"[class.all_container]='showdetail'></div>
+  <div id="btn_location" *ngIf="!showdetail">
+    <!-- <button ion-button class="btn_loaction" (click)="getLocationByBrowser()">
+      定位到当前位置
+    </button>
+    <button ion-button class="btn_loaction" (click)="confirm()">确定</button> -->
+    <div *ngFor="let poi of allPois;let i = index" (click)="displayPOI(i,poi.point)">
+      <ion-item style="background-color:rgb(238,238,238); border-bottom:lightgray 1px solid;">
+        {{poi.address}}
+        <span *ngIf="poiindex===i" class="location right">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

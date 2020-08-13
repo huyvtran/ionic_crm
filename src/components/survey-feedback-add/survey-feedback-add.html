@@ -1,0 +1,39 @@
+<ion-list>
+  <ion-list-header>
+    {{translateService.translateFunc('pad.clm_doc_title')}}
+    <button ion-button icon-only clear item-end (click)="openmodal(surveyData)">
+      <ion-icon color="secondary" name="add-circle"></ion-icon>
+    </button>
+  </ion-list-header>
+  <ion-item-group *ngFor="let surveyd of surveyData; let i = index">
+    <ion-item-divider>
+      {{ surveyd.name }}
+      <button ion-button icon-only clear item-start (click)="openClmPlayer(surveyd.id,surveyd.name,i, surveyd)">
+        <ion-icon class="ffa fa-play"></ion-icon>
+      </button>
+      <!-- <button ion-button icon-only clear item-start *ngIf="!surveyd.isDownloaded" (click)="openClmDownloader()">
+        <ion-icon class="ffa fa-download"></ion-icon>
+      </button> -->
+      <button ion-button icon-only clear item-end (click)="delSurvey(i)">
+        <ion-icon color="danger" name="remove-circle"></ion-icon>
+      </button>
+    </ion-item-divider>
+    <ion-item>
+      <div item-start class="fc-sub-item fc-survey-sub-item"></div>
+      <ion-label text-wrap>
+        {{translateService.translateFunc('pad.clm_reaction_title')}}
+      </ion-label>
+      <ion-select interface="popover" text-right id="clm-selection-{{ i }}" name="clm-selection-{{ i }}"
+        [(ngModel)]="surveyd.reaction">
+        <ion-option value="1">{{translateService.translateFunc('pad.clm_reactive')}}</ion-option>
+        <ion-option value="2">{{translateService.translateFunc('pad.clm_neutral')}}</ion-option>
+        <ion-option value="3">{{translateService.translateFunc('pad.clm_nagtive')}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="surveyd.survey">
+      <div item-start class="fc-sub-item fc-survey-sub-item"></div>
+      {{translateService.translateFunc('pad.clm_survey_title')}}
+      <ion-note item-end>{{translateService.translateFunc('pad.clm_writed')}}</ion-note>
+    </ion-item>
+  </ion-item-group>
+</ion-list>

@@ -1,0 +1,14 @@
+page-detail-info{
+  .fc-calendar-detailinfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .fc-detailinfo-a{
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+  }
+}

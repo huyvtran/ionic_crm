@@ -1,0 +1,20 @@
+<ion-list *ngIf="showSurvey">
+  <ion-list-header>
+    {{translateService.translateFunc('pad.clm_doc_title')}}
+  </ion-list-header>
+  <ion-item-group *ngFor="let surveyd of surveyData">
+    <ion-item-divider>
+      {{ surveyd.name }}
+    </ion-item-divider>
+    <ion-item>
+      <div item-start class="fc-sub-item"></div>
+      {{translateService.translateFunc('pad.clm_reaction_title')}}
+      <ion-note item-end>{{ surveyd.reaction }}</ion-note>
+    </ion-item>
+    <ion-item *ngIf="surveyd.survey">
+      <div item-start class="fc-sub-item"></div>
+      {{translateService.translateFunc('pad.clm_survey_title')}}
+      <ion-note item-end>{{translateService.translateFunc('pad.clm_writed')}}</ion-note>
+    </ion-item>
+  </ion-item-group>
+</ion-list>

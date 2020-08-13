@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar color="webHeader">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      {{translateService.translateFunc('pad.user_page_title')}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+
+    <ion-list inset>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="assets/img/avatar.png" item-start>
+        </ion-avatar>
+        <h2 class="fc-user-header">{{userInfo.user ? userInfo.user.name : ''}}
+          <p class="fc-user-header-numer">{{userInfo.user ? userInfo.user.employee_number : ''}}</p>
+        </h2>
+        <!-- <p>{{userInfo.user ? userInfo.user.role__r.name : ''}} </p> -->
+        <p>{{userInfo.user ? userInfo.user.email : ''}}</p>
+        <p>ID:{{ userInfo.userid }}</p>
+      </ion-item>
+      <!-- <button ion-item (click)="refreshcache()">
+        <ion-icon class="ffa fa-refresh" [class.fa-spin]="isRefresh" item-start></ion-icon>
+        {{translateService.translateFunc('pad.user_menu_change_setting')}}
+      </button> -->
+      <!-- <button ion-item (click)="updatePwd()">
+        <ion-icon class="ffa fa-lock" item-start></ion-icon>
+        {{translateService.translateFunc('pad.user_change_password_title')}}
+      </button> -->
+      <button ion-item (click)="changeLanguage()">
+        <ion-icon class="ffa fa-language" item-start></ion-icon>
+        {{translateService.translateFunc('pad.user_setting_lang_title')}}
+      </button>
+      <button ion-item (click)="gotoAbout()">
+        <ion-icon class="ffa fa-info-circle" item-start></ion-icon>
+        关于SFE
+      </button>
+      <button ion-item (click)="logout()">
+        <ion-icon class="ffa fa-sign-out" item-start></ion-icon>
+        {{translateService.translateFunc('pad.user_menu_logout')}}
+      </button>
+    </ion-list>
+  </ion-card>
+</ion-content>

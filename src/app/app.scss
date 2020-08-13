@@ -1,0 +1,207 @@
+// http://ionicframework.com/docs/theming/
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+// ion-menu ion-content {
+//   // border-right: 1px solid #ccc;
+// }
+.popover-content ion-label{
+  white-space:pre-wrap;
+}
+.toolbar-ios {
+  ion-title.custom-logo {
+    padding: 0 0 0 10px;
+    display: flex;
+    flex-direction: row;
+    img {
+      max-width: 150px;
+      border: 0;
+      max-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      float: left;
+    }
+    span{
+      display: flex;
+      // padding: 5px 20px;
+      font-size: 14px;
+    }
+  }
+  .bar-button-ios[icon-only] ion-icon.ffa {
+    font-size: 18px;
+    padding: 10px;
+  }
+  #alert-badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 10px;
+    padding: 1px 3px;
+    border-radius: 6px;
+    min-width: 12px;
+  }
+}
+/* 2017-09-15 10:58:53 by K */
+.item > ion-icon,
+.item-inner > ion-icon {
+  font-size: 20px;
+  line-height: 1.5;
+  //color: #4990ec;
+}
+.item-ios[detail-push] .item-inner, button.item-ios:not([detail-none]) .item-inner, a.item-ios:not([detail-none]) .item-inner {
+    background-size: 12px 12px;
+}
+.list-ios[inset] {
+  margin: -1px 0;
+}
+.item-value {
+  font-size: 14px;
+  color: #555;
+}
+.list-header-ios {
+  font-size: 14px;
+  letter-spacing: 0;
+  color: #555;
+  background: #eee;
+  border-bottom: 0;
+}
+.list-header-ios .list-label {
+  font-size: 14px;
+}
+// .list-header-ios:not(:first-child) {
+//   margin-top: 16px;
+// }
+.list-ios .grid[no-padding] > .row > .col:last-child .item-block .item-inner {
+  border-bottom: 0;
+}
+.list-label {
+  font-size: 14px;
+  color: #999;
+}
+
+.item-block{
+  min-height: 2.2rem;
+}
+.item-block ion-label {
+  font-size: 16px;
+}
+.text-input {
+  font-size: 16px;
+}
+ion-list .fc-sub-item {
+  height: 24px;
+  width: 6px;
+  background-color: #eee;
+}
+// .toast_success .toast-wrapper {
+//   background: #fff;
+//   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+//   border-radius: 0;
+// }
+// .toast_success .toast-message {
+//   color: #666;
+//   padding: 0;
+//   line-height: 40px;
+// }
+// .toast_success .toast-message:before {
+//   content: '';
+//   background-color: orange;
+//   float: left;
+//   width: 40px;
+//   height: 40px;
+//   margin: 0 10px 0 0;
+// }
+div.fc-sync-timer{
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+// 2018-05-04 16:29:23 by K
+
+.content-ios {
+  color: #000;
+  background-color: #efefef;
+}
+.toolbar-ios-webHeader .toolbar-title-ios, .toolbar-ios-webHeader .bar-button-clear-ios, .toolbar-ios-webHeader .bar-button-default-ios {
+  color: #FFF;
+}
+.header-ios .toolbar-ios:last-child .toolbar-background-ios {
+  border-width: 0;
+}
+.action-sheet-ios .action-sheet-group{
+  z-index: 9999999;
+}
+::-webkit-scrollbar { display: none !important; }
+.scroll-content{
+  background-color: white;
+}
+
+.input-wrapper ion-label:nth-child(2) {
+  font-size: 16px;
+  text-align: right;
+}
+.custom-logo{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+ion-item-options{
+  .button-inner{
+    padding: 0 10px;
+  }
+}
+.allstar{
+  margin-right: 5px;
+  background: url(../assets/img/star.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+.empty_star{
+  margin-right: 5px;
+  background: url(../assets/img/empty_star.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+.half_star{
+  margin-right: 5px;
+  background: url(../assets/img/half_star.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+.location{
+  position: relative;;
+  top: 2px;
+  margin-left: 10px;
+  background: url(../assets/img/location.png);
+  background-repeat: no-repeat;
+  background-size: 100% 80%
+}
+.star_label{
+  margin-right: 60px;
+}
+.star_rating{
+  position: absolute;
+  right: 15px;
+}
+.note-ios {
+    color:#000;
+}
+.list-ios {
+ margin: 0;
+}
+.item-ios p{
+  width: 84%;
+}

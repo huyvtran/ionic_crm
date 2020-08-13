@@ -1,0 +1,60 @@
+<ion-list>
+  <ion-item *ngIf="apiName == 'alert' && !network.onlineStatus">
+    <h3>{{translateService.translateFunc('pad.online_status_offline')}}</h3>
+  </ion-item>
+  <ion-item-sliding *ngFor="let listItem of listData" #slidingItem>
+    <ion-item *ngIf="listItem.listHTML" tappable (click)="gotoDetail(listItem)">
+      <div [innerHTML]="listItem.list"></div>
+    </ion-item>
+    <ion-item *ngIf="!listItem.listHTML" tappable (click)="gotoDetail(listItem)" (press)="onPress(listItem)">
+      <ion-avatar item-start *ngIf="listItem.list.avatar.exist">
+        <img [src]="listItem.list.avatar.data">
+      </ion-avatar>
+      <ion-label>
+        <h2 *ngIf="listItem.list.title.exist">
+          <ion-icon *ngIf="listItem.list.title.icon && listItem.list.title.icontype" [class]="'ffa fa-'+listItem.list.title.icon"></ion-icon>
+          <ion-icon *ngIf="listItem.list.title.icon && !listItem.list.title.icontype" [name]="listItem.list.title.icon"></ion-icon>
+          {{ listItem.list.title.data }}
+        </h2>
+        <h3 *ngIf="listItem.list.subTitle.exist" padding-left>
+          <ion-icon *ngIf="listItem.list.subTitle.icon && listItem.list.subTitle.icon" [class]="'ffa fa-'+listItem.list.subTitle.icon"></ion-icon>
+          <ion-icon *ngIf="listItem.list.subTitle.icon && !listItem.list.subTitle.icon" [name]="listItem.list.subTitle.icon"></ion-icon>
+          {{ listItem.list.subTitle.data }}
+        </h3>
+        <ng-container *ngFor="let cont of listItem.list.contents" [ngSwitch]="cont.type">
+          <p *ngSwitchCase="'text'">
+            <ion-icon *ngIf="cont.icon && cont.icontype" [class]="'ffa fa-'+cont.icon"></ion-icon>
+            <ion-icon *ngIf="cont.icon && !cont.icontype" [name]="cont.icon"></ion-icon>
+            {{ cont.data }}
+          </p>
+          <p *ngSwitchCase="'expression'">
+            <ion-icon *ngIf="cont.icon && cont.icontype" [class]="'ffa fa-'+cont.icon"></ion-icon>
+            <ion-icon *ngIf="cont.icon && !cont.icontype" [name]="cont.icon"></ion-icon>
+            {{ cont.data }}
+          </p>
+        </ng-container>
+      </ion-label>
+      <ion-checkbox *ngIf="isPress" [(disabled)]="listItem.disabled" [(ngModel)]="listItem.select" (ionChange)="itemCheckChange(listItem)"></ion-checkbox>
+      <ion-note item-end>
+        <ng-container *ngFor="let label of listItem.list.labels" [ngSwitch]="label.type">
+          <ion-badge *ngSwitchCase="'label'" [color]="label.color ? undefined : 'secondary'" [style.background-color]="label.color">
+            <ion-icon *ngIf="label.icon && label.icontype" [class]="'ffa fa-'+label.icon"></ion-icon>
+            <ion-icon *ngIf="label.icon && !label.icontype" [name]="label.icon"></ion-icon>
+            {{ label.data }}
+          </ion-badge>
+          <ion-icon *ngSwitchCase="'icon'" name="star" color="danger"></ion-icon>
+        </ng-container>
+      </ion-note>
+    </ion-item>
+    <ion-item-options side="right" *ngIf="listItem.rightOptions">
+      <button ion-button color="primary" *ngFor="let option of listItem.rightOptions" tappable (click)="openWindowWithActions(option, listService.dataAfter[listItem.key], listItem); closeSlide(slidingItem)">
+        {{option.label}}
+      </button>
+    </ion-item-options>
+    <ion-item-options side="left" *ngIf="listItem.leftOptions">
+      <button ion-button color="primary" *ngFor="let option of listItem.leftOptions" tappable (click)="openWindowWithActions(option, listService.dataAfter[listItem.key], listItem); closeSlide(slidingItem)">
+        {{option.label}}
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>

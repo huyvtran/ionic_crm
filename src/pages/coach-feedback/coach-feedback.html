@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="webHeader">
+    <ion-title>
+      {{this.translateService.translateFunc('pad.coach_feedback_page_title')}}
+    </ion-title>
+    <ion-buttons end>
+      <button style="padding-left:1rem" ion-button icon-only color="royal" (click)="gotoFeedbackDetail()">
+        {{this.translateService.translateFunc('pad.action_save')}}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form #formCont="ngForm" style="height: 100%;">
+    <ng-container>
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-6>
+              <ion-item *ngIf="coachPeople">
+                <ion-label text-wrap>{{this.translateService.translateFunc('pad.coach_feedback_employee')}}</ion-label>
+                <ion-label text-wrap>{{coachPeople}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-6>
+              <ion-item *ngIf="coachType">
+                <ion-label text-wrap>{{this.translateService.translateFunc('pad.coach_feedback_coach_type')}}</ion-label>
+                <ion-label text-wrap>{{coachType}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12>
+              <ion-item *ngIf="coachPeople">
+                <ion-label text-wrap>{{this.translateService.translateFunc('pad.coach_feedback_coach_remind')}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- <ion-row>
+            <ion-col>
+              <button ion-button block (click)="openFeedback()">{{this.translateService.translateFunc('pad.coach_feedback_coach_survey')}}</button>
+            </ion-col>
+          </ion-row> -->
+        </ion-grid>
+      </ion-list>
+        <iframe id="coachIframe" [src]="url | safe" *ngIf="url"
+        style="width: 100%; height:100% ; border: none;"
+        sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin allow-popups allow-forms"
+        ></iframe>
+    </ng-container>
+  </form>
+</ion-content>

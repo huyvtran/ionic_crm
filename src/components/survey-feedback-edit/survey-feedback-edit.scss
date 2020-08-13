@@ -1,0 +1,17 @@
+comp-survey-feedback-add {
+  .item-ios {
+    .item-button[item-start] {
+      margin: 0 8px 0 0;
+      padding: 8px 8px 8px 0;
+      height: 40px;
+    }
+    .item-button[item-end] {
+      margin: 0 8px 0 0;
+      padding: 8px 14px;
+      height: 40px;
+    }
+  }
+  .select-ios {
+    padding: 11px 20px 11px 16px;
+  }
+}

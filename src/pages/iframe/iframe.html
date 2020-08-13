@@ -1,0 +1,21 @@
+<ion-header *ngIf="this.shouldShowHeader()">
+  <ion-navbar color="webHeader">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      {{getTitle()}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <iframe style="width:100%;height: 100%" [src]="url_sanitized"></iframe>
+</ion-content>
+
+<draggable-circle
+  *ngIf="this.shouldShowDraggableCircle()"
+  text="返回"
+  diameter="44px"
+  (onTapped)="onTapped()"
+></draggable-circle>
